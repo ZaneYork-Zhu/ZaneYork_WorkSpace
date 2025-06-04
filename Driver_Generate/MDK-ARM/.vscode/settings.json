@@ -1,0 +1,28 @@
+{
+    "files.associations": {
+        "_software_spi.h": "c",
+        "_flash_softwarespi.h": "c",
+        "usart.h": "c",
+        "limits": "c",
+        "memory": "c",
+        "debug_com.h": "c",
+        "main.h": "c",
+        "string": "c",
+        "_haradware_iic.h": "c",
+        "_software_iic.h": "c",
+        "_hardware_iic.h": "c",
+        "_haradware_spi.h": "c",
+        "stm32f4xx_hal_gpio_ex.h": "c",
+        "_hardware_spi.h": "c",
+        "_w25qxx_flash_spi.h": "c",
+        "oled_ssd1306_config.h": "c",
+        "stdint.h": "c",
+        "oled_ssd1306.h": "c",
+        "_24cxx_iic_driver.h": "c",
+        "oled_font.h": "c",
+        "oled_image_array.h": "c",
+        "oled_ascii_font.h": "c",
+        "string.h": "c",
+        "oled_software_spi.h": "c"
+    }
+}
