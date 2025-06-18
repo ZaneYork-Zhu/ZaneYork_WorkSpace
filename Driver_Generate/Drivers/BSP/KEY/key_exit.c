@@ -4,9 +4,9 @@
 
 void keYExit_text_init(void)
 {
-    led_init();                             /* ��ʼ��LED */
-    key_exit_init();                           /* ��ʼ���ⲿ�ж����� */
-    LED0(0);                                /* �ȵ������ */
+    LED_init();                             /* 初始化LED */
+    key_exit_init();                           /* 初始化外部中断输入 */
+    LED0(0);                                /* 先点亮红灯 */
 }
 
 void keYExit_text_while(void)
@@ -51,54 +51,54 @@ void key_exit_init(void)
 }
 
 /**
- * @brief       KEY0 �ⲿ�жϷ������
- * @param       ��
- * @retval      ��
+ * @brief       KEY0 外部中断服务程序
+ * @param       无
+ * @retval      无
  */
 void EXTI4_IRQHandler(void)
 {
-    HAL_GPIO_EXTI_IRQHandler(KEY0_Pin);         /* �����жϴ������ú��� ���KEY0�����ж��� ���жϱ�־λ */
-    __HAL_GPIO_EXTI_CLEAR_IT(KEY0_Pin);         /* HAL��Ĭ�������ж��ٴ����ص����˳�ʱ����һ���жϣ����ⰴ�������󴥷� */
+    HAL_GPIO_EXTI_IRQHandler(KEY0_Pin);         /* 调用中断处理公用函数 清除KEY0所在中断线 的中断标志位 */
+    __HAL_GPIO_EXTI_CLEAR_IT(KEY0_Pin);         /* HAL库默认先清中断再处理回调，退出时再清一次中断，避免按键抖动误触发 */
 }
 
 /**
- * @brief       KEY1 �ⲿ�жϷ������
- * @param       ��
- * @retval      ��
+ * @brief       KEY1 外部中断服务程序
+ * @param       无
+ * @retval      无
  */
 void EXTI3_IRQHandler(void)
 { 
-    HAL_GPIO_EXTI_IRQHandler(KEY1_Pin);         /* �����жϴ������ú��� ���KEY1�����ж��� ���жϱ�־λ���ж��°벿��HAL_GPIO_EXTI_Callbackִ�� */
-    __HAL_GPIO_EXTI_CLEAR_IT(KEY1_Pin);         /* HAL��Ĭ�������ж��ٴ����ص����˳�ʱ����һ���жϣ����ⰴ�������󴥷� */
+    HAL_GPIO_EXTI_IRQHandler(KEY1_Pin);         /* 调用中断处理公用函数 清除KEY1所在中断线 的中断标志位，中断下半部在HAL_GPIO_EXTI_Callback执行 */
+    __HAL_GPIO_EXTI_CLEAR_IT(KEY1_Pin);         /* HAL库默认先清中断再处理回调，退出时再清一次中断，避免按键抖动误触发 */
 }
 
 /**
- * @brief       KEY2 �ⲿ�жϷ������
- * @param       ��
- * @retval      ��
+ * @brief       KEY2 外部中断服务程序
+ * @param       无
+ * @retval      无
  */
 void EXTI2_IRQHandler(void)
 { 
-    HAL_GPIO_EXTI_IRQHandler(KEY2_Pin);        /* �����жϴ������ú��� ���KEY2�����ж��� ���жϱ�־λ���ж��°벿��HAL_GPIO_EXTI_Callbackִ�� */
-    __HAL_GPIO_EXTI_CLEAR_IT(KEY2_Pin);        /* HAL��Ĭ�������ж��ٴ����ص����˳�ʱ����һ���жϣ����ⰴ�������󴥷� */
+    HAL_GPIO_EXTI_IRQHandler(KEY2_Pin);        /* 调用中断处理公用函数 清除KEY2所在中断线 的中断标志位，中断下半部在HAL_GPIO_EXTI_Callback执行 */
+    __HAL_GPIO_EXTI_CLEAR_IT(KEY2_Pin);        /* HAL库默认先清中断再处理回调，退出时再清一次中断，避免按键抖动误触发 */
 }
 
 /**
- * @brief       WK_UP �ⲿ�жϷ������
- * @param       ��
- * @retval      ��
+ * @brief       WK_UP 外部中断服务程序
+ * @param       无
+ * @retval      无
  */
 void EXTI0_IRQHandler(void)
 { 
-    HAL_GPIO_EXTI_IRQHandler(WKUP_Pin);        /* �����жϴ������ú��� ���KEY_UP�����ж��� ���жϱ�־λ���ж��°벿��HAL_GPIO_EXTI_Callbackִ�� */
-    __HAL_GPIO_EXTI_CLEAR_IT(WKUP_Pin);        /* HAL��Ĭ�������ж��ٴ����ص����˳�ʱ����һ���жϣ����ⰴ�������󴥷� */
+    HAL_GPIO_EXTI_IRQHandler(WKUP_Pin);        /* 调用中断处理公用函数 清除KEY_UP所在中断线 的中断标志位，中断下半部在HAL_GPIO_EXTI_Callback执行 */
+    __HAL_GPIO_EXTI_CLEAR_IT(WKUP_Pin);        /* HAL库默认先清中断再处理回调，退出时再清一次中断，避免按键抖动误触发 */
 }
 
 /**
- * @brief       �жϷ����������Ҫ��������
- *              ��HAL�������е��ⲿ�жϷ�����������ô˺���
- * @param       GPIO_Pin:�ж����ź�
- * @retval      ��
+ * @brief       中断服务程序中需要做的事情
+ *              在HAL库中所有的外部中断服务函数都会调用此函数
+ * @param       GPIO_Pin:中断引脚号
+ * @retval      无
  */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
@@ -108,22 +108,22 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         case KEY0_Pin:
             if (KEY0 == 0)
             {
-                LED0_TOGGLE();  /* LED0 ״̬ȡ�� */ 
+                LED0_TOGGLE();  /* LED0 状态取反 */ 
             }
             break;
 
         case KEY1_Pin:
             if (KEY1 == 0)
             {
-                LED1_TOGGLE();  /* LED1 ״̬ȡ�� */ 
+                LED1_TOGGLE();  /* LED1 状态取反 */ 
             }
             break;
 
         case KEY2_Pin:
             if (KEY2 == 0)
             {
-                LED1_TOGGLE();  /* LED1 ״̬ȡ�� */
-                LED0_TOGGLE();  /* LED0 ״̬ȡ�� */ 
+                LED1_TOGGLE();  /* LED1 状态取反 */
+                LED0_TOGGLE();  /* LED0 状态取反 */ 
             }
             break;
 

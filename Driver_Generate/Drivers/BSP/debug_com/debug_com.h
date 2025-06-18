@@ -6,7 +6,6 @@
 /* 包含C语言中的IO库 */
 #include <stdio.h>
 #include "main.h"
-#include "usart.h"
 
 
 #define DEBUG_COM_TX_GPIO_PORT              GPIOA
@@ -49,17 +48,16 @@
 /*开启usart接收中断功能*/
 #define USART_RX_IRQ 0
 /*开启usart的DMA功能*/
-#define USART_DMA    1
+#define USART_DMA    0
 /*定长与非定长*/
 #define data_FIXED_ENABLE 1
 #define data_FIXED_DISENABLE 0
 
-#define RXBUFFERSIZE    2000                       /* 接收缓存大小 */
-#define TXBUFFERSIZE    2000                       /* 发送缓存大小 */
+#define RXBUFFERSIZE    200000                       /* 接收缓存大小 */
+#define TXBUFFERSIZE    200000                       /* 发送缓存大小 */
 #define disFIXED_SIZE   1000                       /* 非定长数据最大大小 */
 /*Note:IRQLen and DMALen需要小于RXBUFFERSIZE*/
-#define IRQlength       5                           /* 定长IRQ发送大小 */
-#define DMAlength       2                           /* 定长DMA发送大小 */
+#define IRQorDMAlength       10                    /* 定长IRQ发送大小 */
 
 void uartInit(USART_TypeDef *uart,uint32_t baudrate);
 HAL_StatusTypeDef UartPollingFixedSelfTransceive(UART_HandleTypeDef *huart, uint8_t *pTxData, uint8_t *pRxData, uint16_t Size, uint32_t Timeout) ;

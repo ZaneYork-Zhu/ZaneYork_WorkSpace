@@ -1,6 +1,5 @@
 
 #include "_24Cxx_iic_driver.h"
-#include "debug_com.h"
 #include "key.h"
 
 #if IIC_HARDWARE_ENABLE
@@ -43,7 +42,7 @@ void EEPROM_text_init(void)
     EEPROM_init();
     uartInit(USART1,115200);
     /* USER CODE BEGIN 2 */
-    printf("IIC开始传输++++ !!\r\n");
+    printf("EEPROM IIC Driver Test\r\n");
     key_init();
     EEPROM_check();
 }

@@ -1,35 +1,42 @@
 #include "led.h"
 
-void led_init(void)
+void LED_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct = {0};
     
-      __HAL_RCC_GPIOF_CLK_ENABLE();
-    /*Configure GPIO pin Output Level */
-    HAL_GPIO_WritePin(GPIOF, LED0_Pin|LED1_Pin, GPIO_PIN_RESET);
+    /* GPIO Ports Clock Enable */
+    __LED0_GPIO_CLK_ENABLE();
+    __LED1_GPIO_CLK_ENABLE();
 
     /*Configure GPIO pins : LED0_Pin LED1_Pin */
-    GPIO_InitStruct.Pin = LED0_Pin|LED1_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Pin = LED0_Pin;
+    GPIO_InitStruct.Mode = LED0_GPIO_MODE; // GPIO_MODE_OUTPUT_PP
+    GPIO_InitStruct.Pull = LED0_GPIO_PULL; // GPIO_NOPULL
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+    HAL_GPIO_Init(LED0_GPIO_Port,&GPIO_InitStruct);
 
-    /*LED输出高电平 默认不亮*/
-    LED0(1);
-    LED1(1);
+    /*Configure GPIO pins : LED0_Pin LED1_Pin */
+    GPIO_InitStruct.Pin = LED1_Pin;
+    GPIO_InitStruct.Mode = LED1_GPIO_MODE; // GPIO_MODE_OUTPUT_PP
+    GPIO_InitStruct.Pull = LED1_GPIO_PULL; // GPIO_NOPULL
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    HAL_GPIO_Init(LED1_GPIO_Port,&GPIO_InitStruct);
+
+    /*initialize LEDs to off state*/
+    LED0(0);
+    LED1(0);
 }
 
-void led_text(void)
+void LED_text(void)
 {
     while (1)
     {
-        LED0(0);
+        LED0(1);
         LED1(0);
         HAL_Delay(500);
-        LED0(1);
+        LED0(0);
         LED1(1);
-        HAL_Delay(500);
+        HAL_Delay(50);
     }
     
 }

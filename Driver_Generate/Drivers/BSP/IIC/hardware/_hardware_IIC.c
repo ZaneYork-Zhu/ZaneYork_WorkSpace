@@ -1,4 +1,4 @@
- #include "_hardware_IIC.h"
+#include "_hardware_IIC.h"
 
 I2C_HandleTypeDef gI2C_HandleTypeStruct = {0};
 DMA_HandleTypeDef ghdma_IIC_rx = {0} ;
@@ -224,23 +224,5 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
     {
         HAL_I2C_ER_IRQHandler(&gI2C_HandleTypeStruct);
     }
-    // IT 接收完成回调函数 
-    void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) 
-    { 
-        if (hi2c == &gI2C_HandleTypeStruct) 
-        { 
-            gIT_transfer_read_complete = 1; 
-        } 
-    } 
-
-    // IT 发送完成回调函数 
-    void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c) 
-    { 
-        if (hi2c == &gI2C_HandleTypeStruct) 
-        { 
-            gIT_transfer_write_complete = 1;
-        } 
-    } 
- 
  #endif
 

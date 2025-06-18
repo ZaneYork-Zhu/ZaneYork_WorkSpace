@@ -14,12 +14,12 @@ extern "C" {
 //oled_iic   i2c2 PB10  SCL PB11 SDA 
 //240C02     i2c1 PB8 SCL PB9 SDA
 /*IIC_SCL引脚初始化*/
-#define SCL_IIC_Pin                     GPIO_PIN_10
+#define SCL_IIC_Pin                     GPIO_PIN_8
 #define SCL_IIC_GPIO_Port               GPIOB
 #define SCL_IIC_GPIO_MODE               GPIO_MODE_OUTPUT_OD
 #define __HAL_SCL_GPIO_CLK_ENABLE()     do{__HAL_RCC_GPIOB_CLK_ENABLE();}while(0U)
 /*IIC_SDA引脚初始化*/
-#define SDA_IIC_Pin                     GPIO_PIN_11
+#define SDA_IIC_Pin                     GPIO_PIN_9
 #define SDA_IIC_GPIO_Port               GPIOB
 #define SDA_IIC_GPIO_MODE               GPIO_MODE_OUTPUT_OD
 #define __HAL_SDA_GPIO_CLK_ENABLE()     do{__HAL_RCC_GPIOB_CLK_ENABLE();}while(0U)

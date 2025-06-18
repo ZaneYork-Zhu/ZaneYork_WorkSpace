@@ -4,8 +4,8 @@
 #include "main.h"
 
 
-#define _HARDWARE_SPI_ENABLE            (0)
-#define _SOFTWARE_SPI_ENABLE            (1)
+#define _HARDWARE_SPI_ENABLE            (1)
+#define _SOFTWARE_SPI_ENABLE            (0)
 
 
 typedef struct 
@@ -14,7 +14,7 @@ typedef struct
     uint8_t memoryType;       // 内存类型（如0x40表示SPI NOR Flash）
     uint8_t capacityId;       // 容量标识（如0x18对应128Mbit）
 
-}__attribute__((packed)) JEDEC_ID;  // 使用紧凑对齐避免填充字节 ;
+}JEDEC_ID;  // 使用紧凑对齐避免填充字节 ;
 
 
 /* FLASH芯片列表 */
@@ -74,14 +74,14 @@ typedef struct
 
 
 // 物理存储单元大小 
-#define W25Q128_PAGE_SIZE       256    // 256B (页大小)
-#define W25Q128_SECTOR_SIZE     4096   // 4KB  (扇区大小)
-#define W25Q128_BLOCK_SIZE      65536  // 64KB (块大小)
+#define W25Q128_PAGE_SIZE       256    // 256B (页个数)
+#define W25Q128_SECTOR_SIZE     4096   // 4KB  (扇区个数)
+#define W25Q128_BLOCK_SIZE      65536  // 64KB (块个数)
  
-// 存储单元总数 
-#define W25Q128_PAGE_COUNT      65536  // 总页数 (16MB / 256B)
-#define W25Q128_SECTOR_COUNT    4096   // 总扇区数 (16MB / 4KB)
-#define W25Q128_BLOCK_COUNT     256    // 总块数 (16MB / 64KB)
+
+#define W25Q128_BLOCK_COUNT         256     // 总块数
+#define W25Q128_SECTORS_PER_BLOCK   16      // 每块扇区数
+#define W25Q128_PAGES_PER_SECTOR    16      // 每扇区页数
 
 #define WAIT_BUSY_TIME          1000000
 
@@ -92,17 +92,29 @@ typedef enum{
     FLASH_ERROR
 }FLASH_State;
 
+// 定义地址信息结构体 
+typedef struct { 
+    uint8_t block;      // 块号 
+    uint8_t sector;     // 扇区号 
+    uint8_t page;       // 页号 
+    uint16_t pageOffset; // 页内偏移 
+} W25Q128_AddrInfo; 
+
+
 void _W25Q128_Init(void);
+
+W25Q128_AddrInfo W25Q128_AddrConvert(uint32_t addr);
+uint32_t W25Q128_AddrReverseConvert(uint16_t block, uint8_t sector, uint8_t page, uint16_t pageStartOffset);
 FLASH_State _W25Q128_ReadID(JEDEC_ID *driverId);
 static FLASH_State _W25Q128_writeEnable(void);
 static FLASH_State _W25Q128_waitBusy(void);
 static FLASH_State sendAddress(uint32_t address);
 
-FLASH_State _W25Q128_onePageWrite(uint32_t pageStartAddress,uint8_t *dataArray,uint8_t dataLen);
+FLASH_State _W25Q128_onePageWrite(uint32_t block, uint32_t sector, uint32_t page, uint32_t pageOffset, uint8_t *sendDataArray, uint16_t sendDataLen);
 FLASH_State _W25Q128_eraseSector(uint16_t saddr);
 FLASH_State _W25Q128_eraseBlock(uint16_t eraseBlockAddr);
 FLASH_State _W25Q128_eraseChip(void);
-FLASH_State _W25Q128_Read(uint32_t StartAddress,uint8_t *dataArray,uint32_t dataLen);
+FLASH_State _W25Q128_Read(uint32_t block, uint32_t sector, uint32_t page, uint32_t pageStartOffset, uint8_t *readDataArray, uint32_t readDataLen);
 
 void _W25Q128_textInit(void);
 void _W25Q128_check(void);

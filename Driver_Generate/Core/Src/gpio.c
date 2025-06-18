@@ -42,22 +42,11 @@
 void MX_GPIO_Init(void)
 {
 
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-
   /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOH_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(software_MODE0_SPI1_CS_GPIO_Port, software_MODE0_SPI1_CS_Pin, GPIO_PIN_SET);
-
-  /*Configure GPIO pin : software_MODE0_SPI1_CS_Pin */
-  GPIO_InitStruct.Pin = software_MODE0_SPI1_CS_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  HAL_GPIO_Init(software_MODE0_SPI1_CS_GPIO_Port, &GPIO_InitStruct);
 
 }
 

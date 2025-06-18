@@ -2,11 +2,10 @@
 #define _Hardware_IIC_H_
 
 #include "main.h"
-#include "usart.h"
 /*IIC_SCL引脚初始化*/
-#define _flash_I2C_24Cxx 0
-#define _oled_I2C_SSD1306 1
-#if _flash_24Cxx
+#define _flash_I2C_24Cxx 1
+#define _oled_I2C_SSD1306 0
+#if _flash_I2C_24Cxx
     #define SCL_IIC_Pin                     GPIO_PIN_8
     #define SCL_IIC_GPIO_Port               GPIOB
     #define SCL_IIC_GPIO_AF                 GPIO_AF4_I2C1
@@ -79,8 +78,8 @@
 #define IIC_ER_SubPriority              0
 
 #define IIC_POLLING_ENABLE                      (0)
-#define IIC_IT_ENABLE                           (0)
-#define IIC_DMA_ENABLE                          (1)
+#define IIC_IT_ENABLE                           (1)
+#define IIC_DMA_ENABLE                          (0)
  
 
 extern I2C_HandleTypeDef gI2C_HandleTypeStruct;

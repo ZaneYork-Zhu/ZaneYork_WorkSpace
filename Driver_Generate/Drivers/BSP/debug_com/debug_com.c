@@ -13,9 +13,15 @@
 /*****************************************************************************************************/
  
  
-uint8_t g_rx_buffer[RXBUFFERSIZE] ={0};                 /* HAL库使用的串口接收数据缓冲区 */
-uint8_t g_tx_buffer[TXBUFFERSIZE] = {0};                /* 发送缓冲, 最大USART_REC_LEN个字节. */
+/*串口接收总数据缓存区*/
+uint8_t *g_tx_buffer = NULL;
+/*串口发送总数据缓存区*/
+uint8_t *g_rx_buffer = NULL;
+/*串口单次收发数据临时缓冲区*/
+uint8_t gFixedTempData[IRQorDMAlength] = {0}; 
+uint8_t gVararginTempData[disFIXED_SIZE] = {0};
 
+/*串口接收数据长度*/
 UART_HandleTypeDef g_UART_HandleTypeStruct;
 #if USART_DMA
     DMA_HandleTypeDef hdma_usart_rx;
@@ -27,9 +33,16 @@ UART_HandleTypeDef g_UART_HandleTypeStruct;
  * @note        注意: 必须设置正确的时钟源, 否则串口波特率就会设置异常.
  * @retval      无
  */
+ 
   
 void uartInit(USART_TypeDef *uart,uint32_t baudrate)
 {
+    g_tx_buffer= (uint8_t *)malloc(TXBUFFERSIZE*sizeof(uint8_t));
+    g_rx_buffer = (uint8_t *)malloc(RXBUFFERSIZE*sizeof(uint8_t));
+    if(g_tx_buffer == NULL || g_rx_buffer == NULL){
+        free(g_tx_buffer);
+        free(g_rx_buffer);
+    }
 //     /* 选择UART1串口作为重映射口 */
      g_UART_HandleTypeStruct.Instance = uart;
      
@@ -63,18 +76,20 @@ void uartInit(USART_TypeDef *uart,uint32_t baudrate)
 
 #if USART_RX_IRQ&&data_FIXED_ENABLE
 {
-    HAL_UART_Receive_IT(&g_UART_HandleTypeStruct,g_tx_buffer,IRQlength);
+    HAL_UART_Receive_IT(&g_UART_HandleTypeStruct,gFixedTempData,IRQorDMAlength);
 }
 #endif
 #if USART_RX_IRQ&&data_FIXED_DISENABLE
-    HAL_UARTEx_ReceiveToIdle_IT(&g_UART_HandleTypeStruct, g_tx_buffer, disFIXED_SIZE);
+    HAL_UARTEx_ReceiveToIdle_IT(&g_UART_HandleTypeStruct, gVararginTempData, disFIXED_SIZE);
 #endif
 #if USART_DMA&&data_FIXED_ENABLE
-    HAL_UART_Receive_DMA(&g_UART_HandleTypeStruct, g_tx_buffer, DMAlength); 
+    HAL_UART_Receive_DMA(&g_UART_HandleTypeStruct, gFixedTempData, IRQorDMAlength); 
 #endif
 #if USART_DMA&&data_FIXED_DISENABLE
-    HAL_UARTEx_ReceiveToIdle_DMA(&g_UART_HandleTypeStruct, g_tx_buffer, disFIXED_SIZE);
+    HAL_UARTEx_ReceiveToIdle_DMA(&g_UART_HandleTypeStruct, gVararginTempData, disFIXED_SIZE);
 #endif
+    free(g_tx_buffer);
+    free(g_rx_buffer);
 }
 
 
@@ -226,8 +241,9 @@ HAL_StatusTypeDef UartPollingFixedSelfTransceive(UART_HandleTypeDef *huart, uint
     {
         if(g_UART_HandleTypeStruct.Instance == DEBUG_COM)
         {
-            HAL_UART_Transmit(&g_UART_HandleTypeStruct, g_tx_buffer, IRQlength, HAL_MAX_DELAY);
-            HAL_UART_Receive_IT(&g_UART_HandleTypeStruct, g_tx_buffer, IRQlength); // 继续接收
+            HAL_UART_Transmit(&g_UART_HandleTypeStruct, gFixedTempData, IRQorDMAlength, HAL_MAX_DELAY);
+            HAL_UART_Receive_IT(&g_UART_HandleTypeStruct, gFixedTempData, IRQorDMAlength); // 继续接收
+            
         }
     }
 #endif
@@ -250,8 +266,8 @@ HAL_StatusTypeDef UartPollingFixedSelfTransceive(UART_HandleTypeDef *huart, uint
  {
      if(g_UART_HandleTypeStruct.Instance == DEBUG_COM)
      {
-         HAL_UART_Transmit(&g_UART_HandleTypeStruct, g_tx_buffer, Size, HAL_MAX_DELAY);
-         HAL_UARTEx_ReceiveToIdle_IT(&g_UART_HandleTypeStruct, g_tx_buffer, disFIXED_SIZE); // 继续接收
+         HAL_UART_Transmit(&g_UART_HandleTypeStruct, gVararginTempData, Size, HAL_MAX_DELAY);
+         HAL_UARTEx_ReceiveToIdle_IT(&g_UART_HandleTypeStruct, gVararginTempData, disFIXED_SIZE); // 继续接收
      }
  }
 #endif
@@ -287,9 +303,9 @@ HAL_StatusTypeDef UartPollingFixedSelfTransceive(UART_HandleTypeDef *huart, uint
         {
             if(g_UART_HandleTypeStruct.Instance == DEBUG_COM)
             {
-                if(HAL_UART_Transmit_DMA(&g_UART_HandleTypeStruct, g_tx_buffer, DMAlength) == HAL_OK)
+                if(HAL_UART_Transmit_DMA(&g_UART_HandleTypeStruct, gFixedTempData, IRQorDMAlength) == HAL_OK)
                 {
-                    HAL_UART_Receive_DMA(&g_UART_HandleTypeStruct, g_tx_buffer, DMAlength); // 继续接收
+                    HAL_UART_Receive_DMA(&g_UART_HandleTypeStruct, gFixedTempData, IRQorDMAlength); // 继续接收
                 }
             }
         }
@@ -307,9 +323,9 @@ HAL_StatusTypeDef UartPollingFixedSelfTransceive(UART_HandleTypeDef *huart, uint
         {
             if(g_UART_HandleTypeStruct.Instance == DEBUG_COM)
             {
-                if(HAL_UART_Transmit_DMA(&g_UART_HandleTypeStruct, g_tx_buffer, Size) == HAL_OK)
+                if(HAL_UART_Transmit_DMA(&g_UART_HandleTypeStruct, gVararginTempData, Size) == HAL_OK)
                 {
-                    HAL_UARTEx_ReceiveToIdle_DMA(&g_UART_HandleTypeStruct, g_tx_buffer, disFIXED_SIZE); // 继续接收
+                    HAL_UARTEx_ReceiveToIdle_DMA(&g_UART_HandleTypeStruct, gVararginTempData, disFIXED_SIZE); // 继续接收
                 }
             }
         }

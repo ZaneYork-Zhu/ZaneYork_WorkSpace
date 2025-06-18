@@ -17,10 +17,10 @@
 #define WKUP_GPIO_Port GPIOA
 #define WKUP_EXTI_IRQn EXTI0_IRQn
 
-#define KEY0        HAL_GPIO_ReadPin(KEY0_GPIO_Port, KEY0_Pin)     /* 读取KEY0引脚 */
-#define KEY1        HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin)     /* 读取KEY1引脚 */
-#define KEY2        HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin)     /* 读取KEY2引脚 */
-#define WK_UP       HAL_GPIO_ReadPin(WKUP_GPIO_Port, WKUP_Pin)     /* 读取WKUP引脚 */
+#define KEY0        HAL_GPIO_ReadPin(KEY0_GPIO_Port, KEY0_Pin)     /* 璇诲彇KEY0寮曡剼 */
+#define KEY1        HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin)     /* 璇诲彇KEY1寮曡剼 */
+#define KEY2        HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin)     /* 璇诲彇KEY2寮曡剼 */
+#define WK_UP       HAL_GPIO_ReadPin(WKUP_GPIO_Port, WKUP_Pin)     /* 璇诲彇WKUP寮曡剼 */
 
 void key_exit_init(void);
 
