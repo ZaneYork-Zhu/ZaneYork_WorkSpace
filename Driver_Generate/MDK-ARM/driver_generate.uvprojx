@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Drivers/BSP/debug_com;..\Drivers\BSP\OLED;..\Drivers\BSP\OLED\oled_SPI\hardware</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Drivers/BSP/debug_com;..\Drivers\BSP\OLED;..\Drivers\BSP\OLED\oled_SPI\hardware;..\Drivers\BSP\LED;..\Drivers\BSP\TIMER\Base_timer</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -648,14 +648,14 @@
               <FilePath>..\Drivers\BSP\debug_com\debug_com.c</FilePath>
             </File>
             <File>
-              <FileName>oled_ssd1306.c</FileName>
+              <FileName>base_timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Drivers\BSP\OLED\oled_ssd1306.c</FilePath>
+              <FilePath>..\Drivers\BSP\TIMER\Base_timer\base_timer.c</FilePath>
             </File>
             <File>
-              <FileName>oled_hardware_SPI.c</FileName>
+              <FileName>led.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Drivers\BSP\OLED\oled_SPI\hardware\oled_hardware_SPI.c</FilePath>
+              <FilePath>..\Drivers\BSP\LED\led.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -562,8 +562,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Drivers\BSP\OLED\oled_ssd1306.c</PathWithFileName>
-      <FilenameWithoutPath>oled_ssd1306.c</FilenameWithoutPath>
+      <PathWithFileName>..\Drivers\BSP\TIMER\Base_timer\base_timer.c</PathWithFileName>
+      <FilenameWithoutPath>base_timer.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -574,8 +574,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Drivers\BSP\OLED\oled_SPI\hardware\oled_hardware_SPI.c</PathWithFileName>
-      <FilenameWithoutPath>oled_hardware_SPI.c</FilenameWithoutPath>
+      <PathWithFileName>..\Drivers\BSP\LED\led.c</PathWithFileName>
+      <FilenameWithoutPath>led.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

@@ -1,93 +1,66 @@
-/** 
- * @file    base_timer_it.c 
- * @author  [frank] 
- * @date    [2025å¹´6æœˆ26æ—¥21:36:14] 
- * @brief   è¯¥æ–‡ä»¶å®žçŽ°äº†é€šç”¨å®šæ—¶å™¨TIMXå®šæ—¶ä¸­æ–­çš„åˆå§‹åŒ–åŠŸèƒ½ã€‚ 
- *          é€‚ç”¨äºŽSTM32F407ç³»åˆ—ï¼Œå…¶ä¸­TIM6/TIM7ä¸ºåŸºæœ¬å®šæ—¶å™¨ã€‚ 
- *          é€šç”¨å®šæ—¶å™¨æ—¶é’Ÿæ¥è‡ªAPB1ï¼Œå½“PPRE1 â‰¥ 2åˆ†é¢‘æ—¶ï¼Œé€šç”¨å®šæ—¶å™¨æ—¶é’Ÿä¸ºAPB1æ—¶é’Ÿçš„2å€ï¼ˆ84MHzï¼‰ã€‚ 
- *          å®šæ—¶å™¨æº¢å‡ºæ—¶é—´å¯é€šè¿‡å…¬å¼Tout = ((arr + 1) * (psc + 1)) / Ft usè®¡ç®—ï¼ŒFtä¸ºå®šæ—¶å™¨å·¥ä½œé¢‘çŽ‡ï¼ˆå•ä½ï¼šMHzï¼‰ã€‚ 
- * 
- * @brief   This file implements the initialization function of the general timer TIMX timing interrupt. 
- *          It is applicable to the STM32F407 series, where TIM6/TIM7 are basic timers. 
- *          The clock of the general timer comes from APB1. When PPRE1 â‰¥ 2 division, 
- *          the clock of the general timer is twice the APB1 clock (84MHz). 
- *          The timer overflow time can be calculated by the formula Tout = ((arr + 1) * (psc + 1)) / Ft us, 
- *          where Ft is the timer operating frequency (unit: MHz). 
- */
 #include "base_timer_it.h"
 #include "led.h"
 
-TIM_HandleTypeDef gTim_base_handle = {0};
+TIM_HandleTypeDef tim_base_handle = {0};
 
-void BaseTimer_Test_Init(void){ 
-    /*å®žçŽ°2sé’Ÿæº¢å‡ºä¸€æ¬¡*/
-  baseTimer_SetARPE_Init(BASE_TIMX_INT,20000,8400,0);
-  LED_init();
-  uartInit(USART1,115200);
-}
-void BaseTimer_Test_While(void){
 
-    /*æ£€æµ‹æº¢å‡ºæ›´æ–°äº‹ä»¶*/
-    while(__HAL_TIM_GET_FLAG(&gTim_base_handle, TIM_FLAG_UPDATE)){
-      /*æ¸…é™¤æ›´æ–°äº‹ä»¶*/
-      __HAL_TIM_CLEAR_FLAG(&gTim_base_handle, TIM_FLAG_UPDATE);
-      /*é—ªçƒLED*/
-      LED0_TOGGLE();
-      printf("BaseTimer_Test_While\r\n");
-  }
+void base_text_init(void)
+{
+
+    led_init();
+    baseTimerItInit(BASE_TIMX_INT,5000,8400);
 }
 
+void base_text_while(void)
+{
+    LED0_TOGGLE();
+    HAL_Delay(200);
+}
 
 /**
- * @brief       é€šç”¨å®šæ—¶å™¨TIMXå®šæ—¶ä¸­æ–­åˆå§‹åŒ–å‡½æ•°
- * @brief       stm32F407->TIM6/TIM7æ˜¯åŸºæœ¬å®šæ—¶å™¨
+ * @brief       Í¨ÓÃ¶¨Ê±Æ÷TIMX¶¨Ê±ÖÐ¶Ï³õÊ¼»¯º¯Êý
  * @note
- *              é€šç”¨å®šæ—¶å™¨çš„æ—¶é’Ÿæ¥è‡ªAPB1,å½“PPRE1 â‰¥ 2åˆ†é¢‘çš„æ—¶å€™
- *              é€šç”¨å®šæ—¶å™¨çš„æ—¶é’Ÿä¸ºAPB1æ—¶é’Ÿçš„2å€, è€ŒAPB1ä¸º42M, æ‰€ä»¥å®šæ—¶å™¨æ—¶é’Ÿ = 84Mhz
- *              å®šæ—¶å™¨æº¢å‡ºæ—¶é—´è®¡ç®—æ–¹æ³•: Tout = (arr*psc) / Ft us.
- *              Ft=å®šæ—¶å™¨å·¥ä½œé¢‘çŽ‡,å•ä½:Mhz
- * @param       tim_baseHandle: å®šæ—¶å™¨
- * @param       arr: è‡ªåŠ¨é‡è£…å€¼
- * @param       psc: é¢„åˆ†é¢‘ç³»æ•°
- * @retval      æ— 
+ *              Í¨ÓÃ¶¨Ê±Æ÷µÄÊ±ÖÓÀ´×ÔAPB1,µ±PPRE1 ¡Ý 2·ÖÆµµÄÊ±ºò
+ *              Í¨ÓÃ¶¨Ê±Æ÷µÄÊ±ÖÓÎªAPB1Ê±ÖÓµÄ2±¶, ¶øAPB1Îª42M, ËùÒÔ¶¨Ê±Æ÷Ê±ÖÓ = 84Mhz
+ *              ¶¨Ê±Æ÷Òç³öÊ±¼ä¼ÆËã·½·¨: Tout = ((arr + 1) * (psc + 1)) / Ft us.
+ *              Ft=¶¨Ê±Æ÷¹¤×÷ÆµÂÊ,µ¥Î»:Mhz
+ * @param       tim_baseHandle: ¶¨Ê±Æ÷
+ * @param       arr: ×Ô¶¯ÖØ×°Öµ
+ * @param       psc: Ô¤·ÖÆµÏµÊý
+ * @retval      ÎÞ
  */
-void  baseTimer_SetARPE_Init(TIM_TypeDef* TimInstance,uint16_t arr, uint16_t psc ,uint8_t setARPE)
+void  baseTimerItInit(TIM_TypeDef* TIM,uint16_t arr, uint16_t psc)
 {
-    /* é€šç”¨å®šæ—¶å™¨x */
-    gTim_base_handle.Instance = TimInstance;
-    /* TIMx_PSC->é¢„åˆ†é¢‘ç³»æ•° */
-    gTim_base_handle.Init.Prescaler =psc -1;
-    /* TIMx_CNT->é€’å¢žè®¡æ•°æ¨¡å¼ */
-    /* åŸºæœ¬å®šæ—¶å™¨->åªæœ‰é€’å¢žè®¡æ•°åŠŸèƒ½ */
-    gTim_base_handle.Init.CounterMode = TIM_COUNTERMODE_UP; 
-    /* TIMx_ARR->è‡ªåŠ¨è£…è½½å€¼ */
-    gTim_base_handle.Init.Period = arr-1;
+    
+
+    /* Í¨ÓÃ¶¨Ê±Æ÷x */
+    tim_base_handle.Instance = TIM;
+    /* Ô¤·ÖÆµÏµÊý */
+    tim_base_handle.Init.Prescaler =psc -1;
+     /* µÝÔö¼ÆÊýÄ£Ê½ */
+    tim_base_handle.Init.CounterMode = TIM_COUNTERMODE_UP; 
+    /* ×Ô¶¯×°ÔØÖµ */
+    tim_base_handle.Init.Period = arr-1;
+    /* autoÓ°×Ó¼Ä´æÆ÷*/
+    tim_base_handle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
+    /* ³õÊ¼»¯¶¨Ê±Æ÷ */
+    if (HAL_TIM_Base_Init(&tim_base_handle) != HAL_OK)
     {
-      /* è‡ªåŠ¨è£…è½½ä½¿èƒ½é€‰æ‹© */
-      if(setARPE){gTim_base_handle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;}
-      else{gTim_base_handle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;}
+    Error_Handler();
     }
-    /* åˆå§‹åŒ–å®šæ—¶å™¨ */
-    if (HAL_TIM_Base_Init(&gTim_base_handle) != HAL_OK){
-      Error_Handler();
-    }
-    /*ç”¨äºŽé…ç½®å®šæ—¶å™¨ï¼ˆTIMï¼‰ä¸»æ¨¡å¼ï¼ˆMaster Modeï¼‰ */
+    /*ÓÃÓÚÅäÖÃ¶¨Ê±Æ÷£¨TIM£©Ö÷Ä£Ê½£¨Master Mode£© */
     TIM_MasterConfigTypeDef sMasterConfig = {0};
     sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
     sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-    if (HAL_TIMEx_MasterConfigSynchronization(&gTim_base_handle, &sMasterConfig) != HAL_OK){
-      Error_Handler();
+    if (HAL_TIMEx_MasterConfigSynchronization(&tim_base_handle, &sMasterConfig) != HAL_OK)
+    {
+    Error_Handler();
     }
-#if BASE_TIMER_POLL_ENABLE
-    /* ä½¿èƒ½å®šæ—¶å™¨x */
-    if (HAL_TIM_Base_Start(&gTim_base_handle) != HAL_OK){
-      Error_Handler();
-    }
-#endif
-#if BASE_TIMER_IT_ENABLE
-    /* ä½¿èƒ½å®šæ—¶å™¨xå’Œå®šæ—¶å™¨xæ›´æ–°ä¸­æ–­ */
-    HAL_TIM_Base_Start_IT(&gTim_base_handle);
-#endif
+    /* USER CODE BEGIN TIM6_Init 2 */
+    
+    /* Ê¹ÄÜ¶¨Ê±Æ÷xºÍ¶¨Ê±Æ÷x¸üÐÂÖÐ¶Ï */
+    HAL_TIM_Base_Start_IT(&tim_base_handle);
+    /* USER CODE END TIM6_Init 2 */
 }
 
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
@@ -98,38 +71,38 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
   /* USER CODE BEGIN TIM6_MspInit 0 */
 
   /* USER CODE END TIM6_MspInit 0 */
-    /* ä½¿èƒ½TIMxæ—¶é’Ÿ */
-    __BASE_TIMX_INT_CLK_ENABLE();
+    /* Ê¹ÄÜTIMxÊ±ÖÓ */
+    BASE_TIMX_INT_CLK_ENABLE();
 
-    // /* è®¾ç½®ä¸­æ–­ä¼˜å…ˆçº§ï¼ŒæŠ¢å ä¼˜å…ˆçº§ï¼Œå­ä¼˜å…ˆçº§ */
-    // HAL_NVIC_SetPriority(BASE_TIMX_INT_IRQn, 0, 0);
-    // /* å¼€å¯ITMxä¸­æ–­ */
-    // HAL_NVIC_EnableIRQ(BASE_TIMX_INT_IRQn);
+    /* ÉèÖÃÖÐ¶ÏÓÅÏÈ¼¶£¬ÇÀÕ¼ÓÅÏÈ¼¶£¬×ÓÓÅÏÈ¼¶ */
+    HAL_NVIC_SetPriority(BASE_TIMX_INT_IRQn, 0, 0);
+    /* ¿ªÆôITMxÖÐ¶Ï */
+    HAL_NVIC_EnableIRQ(BASE_TIMX_INT_IRQn);
   /* USER CODE BEGIN TIM6_MspInit 1 */
 
   /* USER CODE END TIM6_MspInit 1 */
   }
 }
-// /**
-//  * @brief       å®šæ—¶å™¨ä¸­æ–­æœåŠ¡å‡½æ•°
-//  * @param       æ— 
-//  * @retval      æ— 
-//  */
-// void BASE_TIMX_INT_IRQHandler(void)
-// {
-//     /*æœåŠ¡å‡½æ•°ä¼šè‡ªåŠ¨æ¸…é™¤IT*/
-//     HAL_TIM_IRQHandler(&gTim_base_handle);
-//     /*è¿™é‡Œæ‰‹åŠ¨å†æ¸…ç†ä¸€æ¬¡*/
-//     __HAL_TIM_CLEAR_IT(&gTim_base_handle, TIM_IT_UPDATE);  /* æ¸…é™¤å®šæ—¶å™¨æº¢å‡ºä¸­æ–­æ ‡å¿—ä½ */
-// }
+/**
+ * @brief       ¶¨Ê±Æ÷ÖÐ¶Ï·þÎñº¯Êý
+ * @param       ÎÞ
+ * @retval      ÎÞ
+ */
+void BASE_TIMX_INT_IRQHandler(void)
+{
+    /*·þÎñº¯Êý»á×Ô¶¯Çå³ýIT*/
+    HAL_TIM_IRQHandler(&tim_base_handle);
+    /*ÕâÀïÊÖ¶¯ÔÙÇåÀíÒ»´Î*/
+    __HAL_TIM_CLEAR_IT(&tim_base_handle, TIM_IT_UPDATE);  /* Çå³ý¶¨Ê±Æ÷Òç³öÖÐ¶Ï±êÖ¾Î» */
+}
 
 
-// void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-// {
-//   if(htim->Instance==BASE_TIMX_INT)
-//   {
-//     LED1_TOGGLE();
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  if(htim->Instance==BASE_TIMX_INT)
+  {
+    LED1_TOGGLE();
     
-//   }
+  }
 
-// }
+}

@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "oled_ssd1306.h" 
+#include "base_timer.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -83,7 +83,7 @@ int main(void)
   /* USER CODE BEGIN SysInit */
    uartInit(USART1,115200);
    printf("Hello world!!\r\n");
-   OLED_SSD1306_Init_text(); // Initialize the OLED display and show test image
+   BaseTimer_Test_Init();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -96,7 +96,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    BaseTimer_Test_While();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

@@ -1,21 +1,18 @@
-#ifndef __BASE_TIMER_H_
-#define __BASE_TIMER_H_
+#ifndef __BASE_TIMER_IT_H_
+#define __BASE_TIMER_IT_H_
 
 #include "main.h"
 
 
-extern TIM_HandleTypeDef gTim_base_handle;
+extern TIM_HandleTypeDef tim_base_handle;
 
 #define BASE_TIMX_INT                       TIM6
 #define BASE_TIMX_INT_IRQn                  TIM6_DAC_IRQn
 #define BASE_TIMX_INT_IRQHandler            TIM6_DAC_IRQHandler
-#define __BASE_TIMX_INT_CLK_ENABLE()        do{ __HAL_RCC_TIM6_CLK_ENABLE(); }while(0)  /* TIM6Êó∂ÈíüÈÖçÁΩÆ */
+#define BASE_TIMX_INT_CLK_ENABLE()          do{ __HAL_RCC_TIM6_CLK_ENABLE(); }while(0)  /* TIM6  ±÷” πƒ‹ */
 
-#define BASE_TIMER_POLL_ENABLE (1)
+void  baseTimerItInit(TIM_TypeDef* TIM,uint16_t arr, uint16_t psc);
 
-void  baseTimer_SetARPE_Init(TIM_TypeDef* TimInstance,uint16_t arr, uint16_t psc ,uint8_t setARPE);
-
-void BaseTimer_Test_Init(void);
-void BaseTimer_Test_While(void);
-
+void base_text_init(void);
+void base_text_while(void);
 #endif
