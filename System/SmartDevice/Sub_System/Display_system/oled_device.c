@@ -1,6 +1,6 @@
 #include "oled_device.h"
 #include "kal_oled.h"
-
+#include <stdio.h>
 
 
 //128x64 OLED显示设备的显存地址
@@ -13,10 +13,10 @@ DisplayDeviceData g_OledDeviceData = {
 };
 
 
-static int OledDeviceInit(DisplayDevice *ptDisplayDevice) {
+static int OledDeviceInit() {
     // 初始化OLED显示设备
     // 这里可以添加具体的初始化代码
-    KAL_OledDeviceInit(ptDisplayDevice); 
+    KAL_OledDeviceInit(); 
     return 0; // 返回0表示成功
 }
 
@@ -27,10 +27,10 @@ static int OledDeviceDeInit(DisplayDevice *ptDisplayDevice) {
     return 0; // 返回0表示成功
 }
 
-static int OledDeviceSetPixel(DisplayDevice *ptDisplayDevice, int x, int y) {
+static int OledDeviceSetPixel(struct DisplayDevice *ptDisplayDevice, int x, int y, int isLit) {
 
     // 设置OLED显示设备的像素点
-    KAL_OledDeviceSetPixel(ptDisplayDevice, x, y);
+    KAL_OledDeviceSetPixel(ptDisplayDevice, x, y, isLit);
     return 0; // 返回0表示成功
 }
 
@@ -52,3 +52,17 @@ DisplayDevice g_tOledDevice ={
     .SetPixel = OledDeviceSetPixel, // 这里可以设置清除像素函数
     .FlushGramForDisplay = OledDeviceFlushGramForDisplay // 这里可以设置刷新显示函数
 };
+
+/**
+ * @brief 注册OLED显示设备
+ * * 该函数将OLED显示设备注册到输入设备系统中，以便在系统初始化时调用。
+ * * @details 该函数完成以下工作:
+ *   1. 调用InputDeviceRegister()函数将OLED显示设备注册到输入设备系统中
+ *   2. 通过g_tOledDevice结构体传递OLED显示设备的相关信息
+ *   3. 注册后设备可通过输入管理系统统一管理
+ */
+void AddOledDisplayDevice(void)
+{
+    DisplayDeviceRegister(&g_tOledDevice);
+    
+}

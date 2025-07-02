@@ -4,4 +4,5 @@
 #include "display_device.h"
 #include "System_Config.h"
 
+void AddOledDisplayDevice(void);
 #endif  // __OLED_DEVICE_H__

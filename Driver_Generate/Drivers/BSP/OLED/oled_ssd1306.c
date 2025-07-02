@@ -28,30 +28,30 @@
   */ 
 static uint8_t gOLED_gram_buffer[PAGE_MAX][COL_MAX] = {0}; 
  
-// // 初始化OLED并显示测试图像的函数 
-// void OLED_SSD1306_Init_text(void) 
-// { 
-//     uartInit(USART1,115200);
+// 初始化OLED并显示测试图像的函数 
+void OLED_SSD1306_Init_text(void) 
+{ 
+    uartInit(USART1,115200);
 
-//     // 调用OLED初始化函数 
-//     OLED_SSD1306_Init(); 
-//     // 定义一个测试图像数据数组 
-//     uint8_t Image[] = { 
-//         0xFF,0x01,0xE1,0x11,0x49,0x25,0x45,0x05,0x45,0x25,0x49,0x11,0xE1,0x01,0xFF, 
-//         0x7F,0x40,0x43,0x44,0x48,0x51,0x52,0x52,0x52,0x51,0x48,0x44,0x43,0x40,0x7F 
-//     }; 
-//     // 在指定位置显示测试图像 
-//     // oLED_Show_offset_Image(0,0,15,15,Image); 
-//     // oLED_Show_offset_Image(15,15,15,15,Image); 
-//     // oLED_Show_offset_Image(30,30,15,15,Image); 
-//     displayNumberOnOLED(0, 0, 12,2,6); // 显示数字123456789
-//     // oled_show_offset_char(0,0,'A',16);
-//     oLED_Show_offset_String(18,1,"adasfaf",6);
-//     OLED_UpdateToGRAM_ALL(); 
-//     // 注释掉的函数，用于按页模式显示图像 
-//     // oLED_Show_PageMode_Image(0,0,15,15,Image); 
+    // 调用OLED初始化函数 
+    OLED_SSD1306_Init(); 
+    // 定义一个测试图像数据数组 
+    uint8_t Image[] = { 
+        0xFF,0x01,0xE1,0x11,0x49,0x25,0x45,0x05,0x45,0x25,0x49,0x11,0xE1,0x01,0xFF, 
+        0x7F,0x40,0x43,0x44,0x48,0x51,0x52,0x52,0x52,0x51,0x48,0x44,0x43,0x40,0x7F 
+    }; 
+    // 在指定位置显示测试图像 
+    oLED_Show_offset_Image(0,0,15,15,Image); 
+    oLED_Show_offset_Image(15,15,15,15,Image); 
+    oLED_Show_offset_Image(30,30,15,15,Image); 
+    // displayNumberOnOLED(0, 0, 12,2,6); // 显示数字123456789
+    // // oled_show_offset_char(0,0,'A',16);
+    // oLED_Show_offset_String(18,1,"adasfaf",6);
+    OLED_UpdateToGRAM_ALL(); 
+    // 注释掉的函数，用于按页模式显示图像 
+    // oLED_Show_PageMode_Image(0,0,15,15,Image); 
 
-// } 
+} 
 /** 
  * @brief 初始化SSD1306 OLED显示屏。 
  *        该函数首先根据配置初始化I2C软件或硬件，或SPI软件，然后遍历初始化命令序列， 

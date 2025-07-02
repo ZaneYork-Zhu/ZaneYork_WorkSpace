@@ -3,26 +3,21 @@
         {
             "name": "driver_generate",
             "includePath": [
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Core\\Inc",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\CMSIS\\Include",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\BSP\\LED",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\BSP\\debug_com",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\BSP\\RTC",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\BSP\\OLED\\oled_SPI\\hardware",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\BSP\\OLED",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\BSP\\PWR",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\BSP\\KEY",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\BSP\\FLASH",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\BSP\\SPI\\hardware",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\BSP\\SPI\\software",
-                "D:\\Keil_v5\\ARM\\ARMCC\\include",
-                "D:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\MDK-ARM",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Core\\Src",
-                "c:\\Users\\Administrator\\Desktop\\STM32F407ZG_Driver0618\\Driver_Generate\\Drivers\\STM32F4xx_HAL_Driver\\Src"
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Core\\Inc",
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\STM32F4xx_HAL_Driver\\Inc",
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\STM32F4xx_HAL_Driver\\Inc\\Legacy",
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\CMSIS\\Device\\ST\\STM32F4xx\\Include",
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\CMSIS\\Include",
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\BSP\\debug_com",
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\BSP\\OLED",
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\BSP\\OLED\\oled_SPI\\hardware",
+                "D:\\Users\\zhuyuanhang zhu\\AppData\\Local\\Keil_v5\\ARM\\ARMCC\\include",
+                "D:\\Users\\zhuyuanhang zhu\\AppData\\Local\\Keil_v5\\ARM\\ARMCC\\include\\arm_linux",
+                "D:\\Users\\zhuyuanhang zhu\\AppData\\Local\\Keil_v5\\ARM\\ARMCC\\include\\arm_linux_compat",
+                "D:\\Users\\zhuyuanhang zhu\\AppData\\Local\\Keil_v5\\ARM\\ARMCC\\include\\rw",
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\MDK-ARM",
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Core\\Src",
+                "i:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\STM32F4xx_HAL_Driver\\Src"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
@@ -100,8 +95,7 @@
                 "__yield()=",
                 "__vfp_status(x,y)=0"
             ],
-            "intelliSenseMode": "${default}",
-            "configurationProvider": "cmsis-csolution"
+            "intelliSenseMode": "${default}"
         }
     ],
     "version": 4

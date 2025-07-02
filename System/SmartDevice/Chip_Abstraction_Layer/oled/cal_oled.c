@@ -1,22 +1,23 @@
 #include "cal_oled.h"
-
-int CAL_OledDeviceInit(DisplayDevice *ptDisplayDevice) {
+#include "oled_ssd1306.h"
+int CAL_OledDeviceInit(void) {
     // 初始化OLED显示设备
     // 这里可以添加具体的初始化代码.
-    return HAL_OledDeviceInit(ptDisplayDevice);
+    OperationResult eResult = HAL_OledDeviceInit();
+    return (int)eResult; // 返回0表示成功
 }
 
 int CAL_OledDeviceDeInit(DisplayDevice *ptDisplayDevice) {
     // 释放OLED显示设备资源
     // 这里可以添加具体的释放资源代码
-    return HAL_OledDeviceDeInit(ptDisplayDevice);
+    return 0;
 }
 
-int CAL_OledDeviceSetPixel(DisplayDevice *ptDisplayDevice, int x, int y) {
+int CAL_OledDeviceSetPixel(DisplayDevice *ptDisplayDevice, int x, int y, int isLit) {
 
     // 设置OLED显示设备的像素点
     // 这里可以添加具体的设置像素点代码
-    return HAL_OledDeviceSetPixel(ptDisplayDevice, x, y);
+    return HAL_OledDeviceSetPixel(ptDisplayDevice, x, y, isLit);
 }
 
 void CAL_OledDeviceFlushGramForDisplay(DisplayDevice *ptDisplayDevice) {

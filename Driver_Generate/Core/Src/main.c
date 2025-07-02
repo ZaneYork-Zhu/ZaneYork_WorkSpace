@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-
+#include "oled_ssd1306.h" 
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -83,6 +83,7 @@ int main(void)
   /* USER CODE BEGIN SysInit */
    uartInit(USART1,115200);
    printf("Hello world!!\r\n");
+   OLED_SSD1306_Init_text(); // Initialize the OLED display and show test image
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */

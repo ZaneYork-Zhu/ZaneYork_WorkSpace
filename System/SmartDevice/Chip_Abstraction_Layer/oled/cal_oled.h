@@ -4,9 +4,9 @@
 #include "display_device.h"
 
 
-int CAL_OledDeviceInit(DisplayDevice *ptDisplayDevice);
+int CAL_OledDeviceInit(void);
 int CAL_OledDeviceDeInit(DisplayDevice *ptDisplayDevice);
-int CAL_OledDeviceSetPixel(DisplayDevice *ptDisplayDevice, int x, int y);
+int CAL_OledDeviceSetPixel(DisplayDevice *ptDisplayDevice, int x, int y, int isLit);
 void CAL_OledDeviceFlushGramForDisplay(DisplayDevice *ptDisplayDevice);
 
 

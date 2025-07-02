@@ -1,11 +1,11 @@
 #include "kal_oled.h"
 #include "cal_oled.h"
 #include "System_Config.h"
-int KAL_OledDeviceInit(DisplayDevice *ptDisplayDevice) {
+int KAL_OledDeviceInit(void) {
     // 初始化OLED显示设备
     // 这里可以添加具体的初始化代码
 #if defined(CONFIG_NO_OS)
-    return CAL_OledDeviceInit(ptDisplayDevice);
+    return CAL_OledDeviceInit();
 #elif defined(CONFIG_FREE_RTOS)
     // 如果使用操作系统，可以在这里添加操作系统相关的初始化代码
     return FreeRtos_OledDeviceInit(ptDisplayDevice);
@@ -29,12 +29,12 @@ int KAL_OledDeviceDeInit(DisplayDevice *ptDisplayDevice) {
 #endif
 }
 
-int KAL_OledDeviceSetPixel(DisplayDevice *ptDisplayDevice, int x, int y) {
+int KAL_OledDeviceSetPixel(DisplayDevice *ptDisplayDevice, int x, int y, int isLit) {
 
     // 设置OLED显示设备的像素点
     // 这里可以添加具体的设置像素点代码
 #if defined(CONFIG_NO_OS)   
-    return CAL_OledDeviceSetPixel(ptDisplayDevice, x, y);
+    return CAL_OledDeviceSetPixel(ptDisplayDevice, x, y, isLit);
 #elif defined(CONFIG_FREE_RTOS)
     // 如果使用操作系统，可以在这里添加操作系统相关的设置像素点代码
     return FreeRtos_OledDeviceSetPixel(ptDisplayDevice, x, y);

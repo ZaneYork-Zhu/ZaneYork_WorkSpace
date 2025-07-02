@@ -18,7 +18,8 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "device_led_test.h"
+#include "oled_ssd1306.h"
+#include "device_oled_test.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -80,10 +81,14 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  uartInit(USART1, 115200); // 初始化串口1，波特率为115200
+  printf("Hello World!\r\n");
   /* USER CODE END SysInit */
-
+  OLED_SSD1306_Init_text();
+  //display_oled_test(); // 调用OLED显示设备测试函数
   /* Initialize all configured peripherals */
+  
+  //OLED_SSD1306_Init_text();
   /* USER CODE BEGIN 2 */
   //led_test();
   /* USER CODE END 2 */
@@ -93,7 +98,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    led_test();
+ 
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -116,9 +121,10 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_LSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {

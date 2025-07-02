@@ -1,24 +1,5 @@
 {
     "files.associations": {
-        "main.h": "c",
-        "oled_software_iic.h": "c",
-        "oled_software_spi.h": "c",
-        "oled_hardware_spi.h": "c",
-        "_software_spi.h": "c",
-        "_hardware_iic.h": "c",
-        "debug_com.h": "c",
-        "oled_hardware_iic.h": "c",
-        "oled_ssd1306.h": "c",
-        "oled_ascii_font.h": "c",
-        "key.h": "c",
-        "led.h": "c",
-        "rtc.h": "c",
-        "utility": "c",
-        "limits": "c",
-        "memory": "c",
-        "key_exit.h": "c",
-        "_hardware_spi.h": "c",
-        "string": "c"
-    },
-    "C_Cpp.errorSquiggles": "disabled"
+        "oled_hardware_spi.h": "c"
+    }
 }
