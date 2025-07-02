@@ -29,14 +29,11 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 #include "debug_com.h"
-#include "oled_ssd1306.h"
-#include <stdlib.h>
-#include <string.h>
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
 /* USER CODE END Includes */
-void SystemClock_Config(void);
+
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
@@ -60,6 +57,8 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define flash_CS_Pin GPIO_PIN_14
+#define flash_CS_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 

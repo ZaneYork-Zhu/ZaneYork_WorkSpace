@@ -331,7 +331,9 @@ HAL_StatusTypeDef UartPollingFixedSelfTransceive(UART_HandleTypeDef *huart, uint
         }
     #endif
 #endif
- 
+
+
+
 /* USER CODE BEGIN 1 */
 /*******************************************************************************************/
 /* 加入以下代码, 支持printf函数, 需要选择use MicroLIB */
@@ -378,6 +380,7 @@ char *_sys_command_string(char *cmd, int len)
 
 /* FILE 在 stdio.h里面定义. */
 FILE __stdout;
+FILE __stdin;
 /*******************************实现printf支持***********************************************************/
 /**
  * @brief       实现printf支持
@@ -414,5 +417,15 @@ int fputc(int ch, FILE *stream)
     HAL_UART_Transmit(&g_UART_HandleTypeStruct, (uint8_t *)&ch, 1, 1000); 
     return ch; 
 }
+
+int fgetc(FILE *stream)
+{
+    uint8_t data;
+    // 等待接收数据就绪
+    while (__HAL_UART_GET_FLAG(&g_UART_HandleTypeStruct, UART_FLAG_RXNE) != SET);
+    HAL_UART_Receive(&g_UART_HandleTypeStruct, &data, 1, 1000);
+    return (int)data; // 返回接收到的字符
+}
+
 #endif
 /* USER CODE END 1 */

@@ -1,3 +1,22 @@
-Load "STM32F407\\STM32F407.axf" 
-Erase Done.Programming Done.Verify OK.Application running ...
-Flash Load finished at 16:33:58
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Keil_v5\ARM\ARM_Compiler_5.06u7\Bin'
+Build target 'STM32F407'
+compiling cal_oled.c...
+..\..\..\SmartDevice\Chip_Abstraction_Layer\oled\cal_oled.c(6): warning:  #223-D: function "HAL_OledDeviceInit" declared implicitly
+      return HAL_OledDeviceInit(ptDisplayDevice);
+..\..\..\SmartDevice\Chip_Abstraction_Layer\oled\cal_oled.c(12): warning:  #223-D: function "HAL_OledDeviceDeInit" declared implicitly
+      return HAL_OledDeviceDeInit(ptDisplayDevice);
+..\..\..\SmartDevice\Chip_Abstraction_Layer\oled\cal_oled.c(19): warning:  #223-D: function "HAL_OledDeviceSetPixel" declared implicitly
+      return HAL_OledDeviceSetPixel(ptDisplayDevice, x, y);
+..\..\..\SmartDevice\Chip_Abstraction_Layer\oled\cal_oled.c(25): warning:  #223-D: function "HAL_OledDeviceFlushGramForDisplay" declared implicitly
+      HAL_OledDeviceFlushGramForDisplay(ptDisplayDevice);
+..\..\..\SmartDevice\Chip_Abstraction_Layer\oled\cal_oled.c: 4 warnings, 0 errors
+linking...
+STM32F407\STM32F407.axf: Error: L6218E: Undefined symbol HAL_OledDeviceDeInit (referred from cal_oled.o).
+STM32F407\STM32F407.axf: Error: L6218E: Undefined symbol HAL_OledDeviceFlushGramForDisplay (referred from cal_oled.o).
+STM32F407\STM32F407.axf: Error: L6218E: Undefined symbol HAL_OledDeviceInit (referred from cal_oled.o).
+STM32F407\STM32F407.axf: Error: L6218E: Undefined symbol HAL_OledDeviceSetPixel (referred from cal_oled.o).
+Not enough information to list image symbols.
+Finished: 1 information, 0 warning and 4 error messages.
+"STM32F407\STM32F407.axf" - 4 Error(s), 4 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01

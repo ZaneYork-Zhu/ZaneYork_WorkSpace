@@ -18,11 +18,11 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "_w25Qxx_flash_SPI.h"
-#include "PWR_Driver.h"
+
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -47,7 +47,7 @@
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
-
+void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -75,15 +75,30 @@ int main(void)
 
   /* USER CODE BEGIN Init */
 
+  /* USER CODE END Init */
+
   /* Configure the system clock */
   SystemClock_Config();
-  _W25Q128_textInit();
+
+  /* USER CODE BEGIN SysInit */
+   uartInit(USART1,115200);
+   printf("Hello world!!\r\n");
+  /* USER CODE END SysInit */
+
+  /* Initialize all configured peripherals */
+  /* USER CODE BEGIN 2 */
+
+  /* USER CODE END 2 */
+
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
   while (1)
   {
-   
-  }
-  
+    /* USER CODE END WHILE */
 
+    /* USER CODE BEGIN 3 */
+  }
+  /* USER CODE END 3 */
 }
 
 /**

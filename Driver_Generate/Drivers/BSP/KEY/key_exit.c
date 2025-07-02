@@ -1,7 +1,7 @@
 #include "key_exit.h"
 #include "led.h"
 
-
+GPIO_InitTypeDef g_GPIO_InitStruct = {0};
 void keYExit_text_init(void)
 {
     LED_init();                             /* 初始化LED */
@@ -15,47 +15,61 @@ void keYExit_text_while(void)
 }
 
 
-
+/**
+ * @brief       外部中断输入初始化
+ * @param       无
+ */
 void key_exit_init(void)
 {
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-    __HAL_RCC_GPIOE_CLK_ENABLE();
-    
-    /*Configure GPIO pins : KEY2_Pin KEY1_Pin KEY0_Pin */
-    GPIO_InitStruct.Pin = KEY2_Pin|KEY1_Pin|KEY0_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
-    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-        
-        
+
+    __HAL_RCC_KEY0_CLK_ENABLE();         /* 使能KEY0引脚时钟 */
+    __HAL_RCC_KEY1_CLK_ENABLE();         /* 使能KEY1引脚时钟 */
+    __HAL_RCC_KEY2_CLK_ENABLE();         /* 使能KEY2引脚时钟 */ 
+    __HAL_RCC_WKUP_CLK_ENABLE();         /* 使能WKUP引脚时钟 */ 
+
+    /*Configure GPIO pins : KEY0_Pin*/
+    g_GPIO_InitStruct.Pin = KEY0_Pin;
+    g_GPIO_InitStruct.Mode = KEY0_GPIO_Mode;
+    g_GPIO_InitStruct.Pull = KEY0_GPIO_Pull;
+    HAL_GPIO_Init(KEY0_GPIO_Port, &g_GPIO_InitStruct);
+    /*Configure GPIO pins : KEY1_Pin*/
+    g_GPIO_InitStruct.Pin = KEY1_Pin;
+    g_GPIO_InitStruct.Mode = KEY1_GPIO_Mode;
+    g_GPIO_InitStruct.Pull = KEY1_GPIO_Pull;
+    HAL_GPIO_Init(KEY1_GPIO_Port, &g_GPIO_InitStruct);
+    /*Configure GPIO pins : KEY2_Pin*/
+    g_GPIO_InitStruct.Pin = KEY2_Pin;
+    g_GPIO_InitStruct.Mode = KEY2_GPIO_Mode;
+    g_GPIO_InitStruct.Pull = KEY2_GPIO_Pull;
+    HAL_GPIO_Init(KEY2_GPIO_Port, &g_GPIO_InitStruct);
     /*Configure GPIO pin : WKUP_Pin */
-    GPIO_InitStruct.Pin = WKUP_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-    HAL_GPIO_Init(WKUP_GPIO_Port, &GPIO_InitStruct);
+    g_GPIO_InitStruct.Pin = WKUP_Pin;
+    g_GPIO_InitStruct.Mode = WKUP_GPIO_Mode;
+    g_GPIO_InitStruct.Pull = WKUP_GPIO_Pull;
+    HAL_GPIO_Init(WKUP_GPIO_Port, &g_GPIO_InitStruct);
 
     /* EXTI interrupt init*/
-    HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 3);
-    HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+    HAL_NVIC_SetPriority(WKUP_EXTI_IRQn, WKUP_PreemptPriority, WKUP_SubPriority);
+    HAL_NVIC_EnableIRQ(WKUP_EXTI_IRQn);
 
-    HAL_NVIC_SetPriority(EXTI2_IRQn, 0, 2);
-    HAL_NVIC_EnableIRQ(EXTI2_IRQn);
+    HAL_NVIC_SetPriority(KEY2_EXTI_IRQn, KEY2_PreemptPriority, KEY2_SubPriority);
+    HAL_NVIC_EnableIRQ(KEY2_EXTI_IRQn);
 
-    HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 1);
-    HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+    HAL_NVIC_SetPriority(KEY1_EXTI_IRQn, KEY1_PreemptPriority, KEY1_SubPriority);
+    HAL_NVIC_EnableIRQ(KEY1_EXTI_IRQn);
 
-    HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+    HAL_NVIC_SetPriority(KEY0_EXTI_IRQn, KEY0_PreemptPriority, KEY0_SubPriority);
+    HAL_NVIC_EnableIRQ(KEY0_EXTI_IRQn);
 
 }
+
 
 /**
  * @brief       KEY0 外部中断服务程序
  * @param       无
  * @retval      无
  */
-void EXTI4_IRQHandler(void)
+void KEY0_EXTI_IRQHandler(void)
 {
     HAL_GPIO_EXTI_IRQHandler(KEY0_Pin);         /* 调用中断处理公用函数 清除KEY0所在中断线 的中断标志位 */
     __HAL_GPIO_EXTI_CLEAR_IT(KEY0_Pin);         /* HAL库默认先清中断再处理回调，退出时再清一次中断，避免按键抖动误触发 */
@@ -66,7 +80,7 @@ void EXTI4_IRQHandler(void)
  * @param       无
  * @retval      无
  */
-void EXTI3_IRQHandler(void)
+void KEY1_EXTI_IRQHandler(void)
 { 
     HAL_GPIO_EXTI_IRQHandler(KEY1_Pin);         /* 调用中断处理公用函数 清除KEY1所在中断线 的中断标志位，中断下半部在HAL_GPIO_EXTI_Callback执行 */
     __HAL_GPIO_EXTI_CLEAR_IT(KEY1_Pin);         /* HAL库默认先清中断再处理回调，退出时再清一次中断，避免按键抖动误触发 */
@@ -77,7 +91,7 @@ void EXTI3_IRQHandler(void)
  * @param       无
  * @retval      无
  */
-void EXTI2_IRQHandler(void)
+void KEY2_EXTI_IRQHandler(void)
 { 
     HAL_GPIO_EXTI_IRQHandler(KEY2_Pin);        /* 调用中断处理公用函数 清除KEY2所在中断线 的中断标志位，中断下半部在HAL_GPIO_EXTI_Callback执行 */
     __HAL_GPIO_EXTI_CLEAR_IT(KEY2_Pin);        /* HAL库默认先清中断再处理回调，退出时再清一次中断，避免按键抖动误触发 */
@@ -88,7 +102,7 @@ void EXTI2_IRQHandler(void)
  * @param       无
  * @retval      无
  */
-void EXTI0_IRQHandler(void)
+void WKUP_EXTI_IRQHandler(void)
 { 
     HAL_GPIO_EXTI_IRQHandler(WKUP_Pin);        /* 调用中断处理公用函数 清除KEY_UP所在中断线 的中断标志位，中断下半部在HAL_GPIO_EXTI_Callback执行 */
     __HAL_GPIO_EXTI_CLEAR_IT(WKUP_Pin);        /* HAL库默认先清中断再处理回调，退出时再清一次中断，避免按键抖动误触发 */

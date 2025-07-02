@@ -5,6 +5,8 @@
 /* 用串口1支持--->仿造Windows的窗口进行通讯 */
 /* 包含C语言中的IO库 */
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "main.h"
 
 
@@ -53,8 +55,8 @@
 #define data_FIXED_ENABLE 1
 #define data_FIXED_DISENABLE 0
 
-#define RXBUFFERSIZE    200000                       /* 接收缓存大小 */
-#define TXBUFFERSIZE    200000                       /* 发送缓存大小 */
+#define RXBUFFERSIZE    20000                       /* 接收缓存大小 */
+#define TXBUFFERSIZE    20000                       /* 发送缓存大小 */
 #define disFIXED_SIZE   1000                       /* 非定长数据最大大小 */
 /*Note:IRQLen and DMALen需要小于RXBUFFERSIZE*/
 #define IRQorDMAlength       10                    /* 定长IRQ发送大小 */

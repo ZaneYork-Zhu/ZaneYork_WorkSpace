@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "oled_device.h": "c",
+        "config.h": "c",
+        "system_config.h": "c",
+        "kal_oled.h": "c",
+        "cal_oled.h": "c"
+    }
+}
