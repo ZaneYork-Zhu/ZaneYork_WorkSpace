@@ -2,7 +2,7 @@
 #include "debug_com.h"
 #include "led.h"
 Tim_State g_timxchy_cap_sta ={0};
-uint16_t g_timxchy_cap_val = 0; /* ���벶��ֵ */  
+uint16_t g_timxchy_cap_val = 0; /* 输入捕获值 */  
 
 /* USER CODE END 0 */
 
@@ -28,20 +28,20 @@ void GTP_IC_text_while(void)
 
     while (1)
     {
-         /*����ɹ�*/
+         /*捕获成功*/
         if(1 == g_timxchy_cap_sta.finish)
         {
-          /*�������*/
+          /*溢出次数*/
           timESum = g_timxchy_cap_sta.data;
-          /*���ʱ���ܺ�*/
+          /*溢出时间总和*/
           timESum *= 65536;
-          /*�ߵ�ƽ�������ʱ��*/
+          /*高电平脉冲宽度时间*/
           timESum += g_timxchy_cap_val;
-          /* ��ӡ�ܵĸߵ�ƽʱ�� */
-          printf("�ߵ�ƽ�������       HIGH.data:%d \r\n", g_timxchy_cap_sta.data); 
-          printf("δ����������ʱ��   HIGH.value:%d us\r\n", g_timxchy_cap_val);
-          printf("�ܸߵ�ƽ�������ʱ�� %d = value * 65536 + data \r\n", timESum); 
-          /*׼����һ�β���*/ 
+          /* 打印总的高电平时间 */
+          printf("高电平溢出次数       HIGH.data:%d \r\n", g_timxchy_cap_sta.data); 
+          printf("未溢出脉冲宽度时间   HIGH.value:%d us\r\n", g_timxchy_cap_val);
+          printf("总高电平脉冲宽度时间 %d = value * 65536 + data \r\n", timESum); 
+          /*准备下一次捕获*/ 
           g_timxchy_cap_sta.finish  = 0;
           g_timxchy_cap_sta.state  = 0;
           g_timxchy_cap_sta.data  = 0;
@@ -65,10 +65,10 @@ void gpio_init(void)
     PA0-WKUP     ------> TIM5_CH1
     */
     GPIO_InitStruct.Pin = GPIO_PIN_0;
-	/*����Ϊ�����ԭ��---���ø�TIM5��Ϊ���벶��*/
+	/*配置为输出的原因---复用给TIM5作为输入捕获*/
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    /*����һ��Ҫ������PA0��Ϊ���뻹��Ҫ������Ҫ��Ȼ�ò���*/
-	/*GPIO_InitStruct.Pull ������ �����볡������Ч�������벶��*/
+    /*这里一定要下拉：PA0作为输入还是要上来拉要不然用不了*/
+	/*GPIO_InitStruct.Pull 的配置 在输入场景下有效（如输入捕获）*/
     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
     GPIO_InitStruct.Alternate = GPIO_AF2_TIM5;
@@ -125,7 +125,7 @@ void  GTP_TimerICInit(TIM_TypeDef* TIM,uint16_t arr, uint16_t psc)
     Error_Handler();
   }
   /* USER CODE BEGIN TIM5_Init 2 */
-  /* ���������ж� + ���벶���жϡ�ͬʱ���������� */
+  /* 启动更新中断 + 输入捕获中断【同时开启两个】 */
   __HAL_TIM_ENABLE_IT(&GPT_IC_Handle, TIM_IT_UPDATE); 
   HAL_TIM_IC_Start_IT(&GPT_IC_Handle, TIM_CHANNEL_1);
   /* USER CODE END TIM5_Init 2 */
@@ -192,80 +192,80 @@ void GTP_TIMX_IC_INT_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-/*���벶���ж�*/
+/*输入捕获中断*/
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
-  /*finish = 0����û�в���ɹ�*/
+  /*finish = 0：还没有捕获成功*/
   if (0 == g_timxchy_cap_sta.finish)
   {
-    /*state = 1:��ʾ�Ѿ������������-->��δ���Ϊ�½��ش����ж�----�������岶��ֵ*/
+    /*state = 1:表示已经捕获过上升沿-->这次触发为下降沿触发中断----计算脉冲捕获值*/
       if(1 == g_timxchy_cap_sta.state)
       {
-        /*��ǲ���ɹ�*/
+        /*标记捕获成功*/
           g_timxchy_cap_sta.finish = 1;
-        /*��ȡ����ֵ */
+        /*获取捕获值 */
           g_timxchy_cap_val = HAL_TIM_ReadCapturedValue(&GPT_IC_Handle, TIM_CHANNEL_1);
-        /*��λ���벶���� */
+        /*复位输入捕获极性 */
         TIM_RESET_CAPTUREPOLARITY(&GPT_IC_Handle, TIM_CHANNEL_1);
-        /*��������Ϊ������--׼����һ�β���*/
+        /*重新设置为上升沿--准备下一次捕获*/
         TIM_SET_CAPTUREPOLARITY(&GPT_IC_Handle, TIM_CHANNEL_1,TIM_INPUTCHANNELPOLARITY_RISING);
       }
-    /*state = 0:��ʾû�в����������-->����ǵ�һ�������ش����ж�--->�ȴ���һ�β���������*/
+    /*state = 0:表示没有捕获过上升沿-->这次是第一次上升沿触发中断--->等待第一次捕获上升沿*/
       else            
       {
         
-        /*�����������ֵ*/
+        /*重置溢出次数值*/
         g_timxchy_cap_sta.data = 0;
-        /*���ò���ֵ��׼����ʼ��*/
+        /*重置捕获值【准备开始】*/
         g_timxchy_cap_val = 0;
-        /*��¼��һ��������*/
+        /*记录第一次上升沿*/
         g_timxchy_cap_sta.state = 1;
 
-        /*�������ò���***********************************/
-        /*�رն�ʱ��5*/
+        /*重新配置部分***********************************/
+        /*关闭定时器5*/
         __HAL_TIM_DISABLE(&GPT_IC_Handle);
-        /*��ʱ��5 ��ʼ�� ������ֵ = 0*/
+        /*定时器5 初始化 ：计数值 = 0*/
         __HAL_TIM_SET_COUNTER(&GPT_IC_Handle,0);
-        /*��λ���벶���� */
+        /*复位输入捕获极性 */
         TIM_RESET_CAPTUREPOLARITY(&GPT_IC_Handle, TIM_CHANNEL_1);
-        /*��������Ϊ������--�ȴ��½��ش�������if*/
+        /*重新设置为下升沿--等待下降沿触发进入if*/
         TIM_SET_CAPTUREPOLARITY(&GPT_IC_Handle, TIM_CHANNEL_1,TIM_INPUTCHANNELPOLARITY_FALLING);
-         /*��ʼ��ʱ��5----��ʼ����*/
+         /*开始定时器5----开始计数*/
         __HAL_TIM_ENABLE(&GPT_IC_Handle);
-        /*�������ò���***********************************/    
+        /*重新配置部分***********************************/    
       }
   }
 
     
 }
 
-/*��������ж�*/
+/*溢出更新中断*/
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  /*��ʱ������������---����ֻ����TIM5����ж�*/
+  /*定时器公共服务函数---这里只处理TIM5溢出中断*/
   if(GTP_TIMX_IC_INT == htim->Instance)
   {
-    /*��ʱ���Ѿ������ ��û����ɹ�*/
+    /*定时器已经溢出了 还没捕获成功*/
     if(0 == g_timxchy_cap_sta.finish)
     {
-      /*�Ѿ�������������*/
+      /*已经捕获到上升沿了*/
       if(1 == g_timxchy_cap_sta.state)
       {
-        /*����������---һֱ�Ǹߵ�ƽ�������������������*/
+        /*最大溢出次数---一直是高电平并且溢出次数到达上限*/
         if(0x3F == g_timxchy_cap_sta.data)
         {
-          /*��λ���벶�񡾴�ʱ�ǵȴ��½��ز��񡿼��� */
+          /*复位输入捕获【此时是等待下降沿捕获】极性 */
           TIM_RESET_CAPTUREPOLARITY(&GPT_IC_Handle, TIM_CHANNEL_1);
           
-         /*��ǿ�Ʊ�ǲ�����ɣ������ö�ʱ��ͨ�������ز���*/
+         /*就强制标记捕获完成，并配置定时器通道上升沿捕获*/
           g_timxchy_cap_sta.finish = 1;
-          /*��ȡ�������ʱ =  Ϊ���ֵ*/
+          /*读取脉冲宽度时 =  为最大值*/
           g_timxchy_cap_val = 0XFFFF;
           
-          /*�������벶�񡾴�ʱ�ǵȴ������ز��񡿼��ԣ����¿�ʼ���� */
+          /*设置输入捕获【此时是等待上升沿捕获】极性，重新开始捕获 */
           TIM_SET_CAPTUREPOLARITY(&GPT_IC_Handle, TIM_CHANNEL_1,TIM_INPUTCHANNELPOLARITY_FALLING);
         }
-        /*��¼�������*/
+        /*记录溢出次数*/
         else
         {
           g_timxchy_cap_sta.data++;

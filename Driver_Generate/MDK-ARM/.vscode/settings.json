@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "oled_hardware_spi.h": "c"
+        "oled_hardware_spi.h": "c",
+        "*.rmd": "markdown",
+        "led.h": "c",
+        "main.h": "c"
     }
 }
