@@ -12,11 +12,12 @@
       <ToolsetName>ARM-ADS</ToolsetName>
       <pArmCC>5060960::V5.06 update 7 (build 960)::.\ARM_Compiler_5.06u7</pArmCC>
       <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARM_Compiler_5.06u7</pCCUsed>
+      <uAC6>8</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F407ZGTx</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32F4xx_DFP.2.17.1</PackID>
+          <PackID>Keil.STM32F4xx_DFP.3.0.0</PackID>
           <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IRAM(0x20000000-0x2001BFFF) IRAM2(0x2001C000-0x2001FFFF) IROM(0x8000000-0x80FFFFF) CLOCK(25000000) FPU2 CPUTYPE("Cortex-M4") TZ</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
@@ -184,6 +185,9 @@
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
             <RvdsVP>2</RvdsVP>
+            <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -320,20 +324,24 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>0</wLevel>
+            <wLevel>2</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
+            <uGnu>0</uGnu>
             <useXO>0</useXO>
             <v6Lang>3</v6Lang>
             <v6LangP>3</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
+            <v6Lto>0</v6Lto>
+            <v6WtE>0</v6WtE>
+            <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Drivers/BSP/debug_com;..\Drivers\BSP\OLED;..\Drivers\BSP\OLED\oled_SPI\hardware;..\Drivers\BSP\LED;..\Drivers\BSP\TIMER\GTP_timer_TIM9+12</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Drivers/BSP/debug_com;..\Drivers\BSP\OLED;..\Drivers\BSP\OLED\oled_SPI\hardware;..\Drivers\BSP\LED;..\Drivers\BSP\TIMER\GTP_timer_TIM9+12\GTP_timer</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -346,6 +354,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
+            <ClangAsOpt>1</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -433,11 +442,15 @@
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
+                    <uGnu>2</uGnu>
                     <useXO>2</useXO>
                     <v6Lang>0</v6Lang>
                     <v6LangP>0</v6LangP>
                     <vShortEn>2</vShortEn>
                     <vShortWch>2</vShortWch>
+                    <v6Lto>2</v6Lto>
+                    <v6WtE>2</v6WtE>
+                    <v6Rtti>2</v6Rtti>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -565,11 +578,15 @@
                     <uThumb>2</uThumb>
                     <uSurpInc>2</uSurpInc>
                     <uC99>2</uC99>
+                    <uGnu>2</uGnu>
                     <useXO>2</useXO>
                     <v6Lang>0</v6Lang>
                     <v6LangP>0</v6LangP>
                     <vShortEn>2</vShortEn>
                     <vShortWch>2</vShortWch>
+                    <v6Lto>2</v6Lto>
+                    <v6WtE>2</v6WtE>
+                    <v6Rtti>2</v6Rtti>
                     <VariousControls>
                       <MiscControls></MiscControls>
                       <Define></Define>
@@ -638,7 +655,7 @@
             <File>
               <FileName>GTP_timer_IT.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Drivers\BSP\TIMER\GTP_timer_TIM9+12\GTP_timer_IT.c</FilePath>
+              <FilePath>..\Drivers\BSP\TIMER\GTP_timer_TIM9+12\GTP_timer\GTP_timer_IT.c</FilePath>
             </File>
           </Files>
         </Group>

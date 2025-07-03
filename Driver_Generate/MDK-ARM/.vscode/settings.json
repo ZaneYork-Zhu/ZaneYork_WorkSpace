@@ -3,6 +3,7 @@
         "oled_hardware_spi.h": "c",
         "*.rmd": "markdown",
         "led.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "gtp_timer_oc_pwm.h": "c"
     }
 }
