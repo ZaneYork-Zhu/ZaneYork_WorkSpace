@@ -20,15 +20,16 @@
 TIM_HandleTypeDef gTim_base_handle = {0};
 
 void BaseTimer_Test(void){
-  /*实现2s钟溢出一次*/
-  baseTimer_SetARPE_Init(BASE_TIMX_INT,20000,8400,0);
   LED_init();
   uartInit(USART1,115200);
+  printf("BaseTimer_Test_Init\r\n");
+  /*实现2s钟溢出一次*/
+  baseTimer_SetARPE_Init(BASE_TIMX_INT,20000,8400,0);
   while (1)
   {
 #if BASE_TIMER_POLL_ENABLE
           /*检测溢出更新事件*/
-    while(__HAL_TIM_GET_FLAG(&gTim_base_handle, TIM_FLAG_UPDATE)){
+    if(__HAL_TIM_GET_FLAG(&gTim_base_handle, TIM_FLAG_UPDATE)){
       /*清除更新事件*/
       __HAL_TIM_CLEAR_FLAG(&gTim_base_handle, TIM_FLAG_UPDATE);
       /*闪烁LED*/
@@ -67,32 +68,35 @@ void  baseTimer_SetARPE_Init(TIM_TypeDef* TimInstance,uint16_t arr, uint16_t psc
     gTim_base_handle.Init.CounterMode = TIM_COUNTERMODE_UP; 
     /* TIMx_ARR->自动装载值 */
     gTim_base_handle.Init.Period = arr-1;
-    {
-      /* 自动装载使能选择 */ 
-      if(setARPE){gTim_base_handle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;}
-      else{gTim_base_handle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;}
-    }
-    /* 初始化定时器 */
-    if (HAL_TIM_Base_Init(&gTim_base_handle) != HAL_OK){
-      Error_Handler();
-    }
-    /*用于配置定时器（TIM）主模式（Master Mode） */
-    TIM_MasterConfigTypeDef sMasterConfig = {0};
-    sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-    sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-    if (HAL_TIMEx_MasterConfigSynchronization(&gTim_base_handle, &sMasterConfig) != HAL_OK){
-      Error_Handler();
-    }
-#if BASE_TIMER_POLL_ENABLE
-    /* 使能定时器x */
-    if (HAL_TIM_Base_Start(&gTim_base_handle) != HAL_OK){
-      Error_Handler();
-    }
-#endif
-#if BASE_TIMER_IT_ENABLE
-    /* 使能定时器x和定时器x更新中断 */
-    HAL_TIM_Base_Start_IT(&gTim_base_handle);
-#endif
+        HAL_TIM_Base_Init(&gTim_base_handle);
+    
+    HAL_TIM_Base_Start(&gTim_base_handle);                       /* 使能定时器x和定时器更新中断 */
+//     {
+//       /* 自动装载使能选择 */ 
+//       if(setARPE){gTim_base_handle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;}
+//       else{gTim_base_handle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;}
+//     }
+//     /* 初始化定时器 */
+//     if (HAL_TIM_Base_Init(&gTim_base_handle) != HAL_OK){
+//       Error_Handler();
+//     }
+//     /*用于配置定时器（TIM）主模式（Master Mode） */
+//     TIM_MasterConfigTypeDef sMasterConfig = {0};
+//     sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+//     sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+//     if (HAL_TIMEx_MasterConfigSynchronization(&gTim_base_handle, &sMasterConfig) != HAL_OK){
+//       Error_Handler();
+//     }
+// #if BASE_TIMER_POLL_ENABLE
+//     /* 使能定时器x */
+//     if (HAL_TIM_Base_Start(&gTim_base_handle) != HAL_OK){
+//       Error_Handler();
+//     }
+// #endif
+// #if BASE_TIMER_IT_ENABLE
+//     /* 使能定时器x和定时器x更新中断 */
+//     HAL_TIM_Base_Start_IT(&gTim_base_handle);
+// #endif
 }
 
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
@@ -107,7 +111,7 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
     __BASE_TIMX_INT_CLK_ENABLE();
 #if BASE_TIMER_IT_ENABLE
     // /* 设置中断优先级，抢占优先级，子优先级 */
-    HAL_NVIC_SetPriority(BASE_TIMX_INT_IRQn, 0, 0);
+    HAL_NVIC_SetPriority(BASE_TIMX_INT_IRQn, 3, 0);
     /* 开启ITMx中断 */
     HAL_NVIC_EnableIRQ(BASE_TIMX_INT_IRQn);
 #endif

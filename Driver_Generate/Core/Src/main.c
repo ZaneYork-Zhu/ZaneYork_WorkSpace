@@ -19,7 +19,8 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "GTP_timer_IT.h"
-
+#include "base_timer.h"
+#include "led.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -79,10 +80,25 @@ int main(void)
 
   /* Configure the system clock */
   SystemClock_Config();
-
+  LED_init();
+  uartInit(USART1,115200);
+  printf("BaseTimer_Test_Init\r\n");
+  /*实现2s钟溢出一次*/
+  baseTimer_SetARPE_Init(BASE_TIMX_INT,20000,8400,0);
+  while (1)
+  {
+          /*检测溢出更新事件*/
+    if(__HAL_TIM_GET_FLAG(&gTim_base_handle, TIM_FLAG_UPDATE)){
+      /*清除更新事件*/
+      __HAL_TIM_CLEAR_FLAG(&gTim_base_handle, TIM_FLAG_UPDATE);
+      /*闪烁LED*/
+      LED0_TOGGLE();
+      printf("BaseTimer_Test_While\r\n");
+    }
+  }
   /* USER CODE BEGIN SysInit */
-   uartInit(USART1,115200);
-   printf("Hello world!!\r\n");
+  //  uartInit(USART1,115200);
+  //  printf("Hello world!!\r\n");
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -95,8 +111,8 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    //BaseTimer_Test();
-    GTP_text(); // Initialize and start the timer, toggle LED every 500ms
+   
+    //GTP_text(); // Initialize and start the timer, toggle LED every 500ms
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

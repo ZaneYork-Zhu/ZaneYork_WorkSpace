@@ -14,6 +14,7 @@
                 "e:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\BSP\\LED",
                 "e:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\BSP\\TIMER\\GTP_timer_TIM9+12\\GTP_timer",
                 "e:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\BSP\\TIMER\\GTP_timer_TIM9+12\\GTP_timer_OC",
+                "e:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\Drivers\\BSP\\TIMER\\Base_timer_TIM6+7",
                 "D:\\Keil_v5\\ARM\\ARMCC\\include",
                 "D:\\Keil_v5\\ARM\\ARMCC\\include\\rw",
                 "e:\\gitcode\\stm32_HAL_Driver\\Driver_Generate\\MDK-ARM",
