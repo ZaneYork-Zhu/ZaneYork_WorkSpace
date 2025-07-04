@@ -23,9 +23,13 @@
 #define GPT_CH1_GPIO_AF                      GPIO_AF3_TIM9
 #define __GPT_CH1_GPIO_CLK_ENABLE()          do { __HAL_RCC_GPIOE_CLK_ENABLE(); } while(0U)
 
+#define GTP_TIMX_OC_PWM_DC_CHANGE_PreemptPriority      3
+#define GTP_TIMX_OC_PWM_DC_CHANGE_SubPriority          0
+
 void GTP_text(void);
+void set_GTP_OC_PwmChange(uint16_t pulse);
 static void GPIO_CH1_Init(uint8_t pinPull);
-void GTP_OC_PwmChange_TimerInit(TIM_TypeDef* TimInstance,uint16_t arr, uint16_t psc,uint8_t setARPE);
+void GTP_OC_PwmChange_TimerInit(TIM_TypeDef* TimInstance,uint16_t arr, uint16_t psc,uint8_t setARPE,uint8_t OCMode);
 
 
 #endif // __GTP_TIMER_OC_PWMCHANGE_H_

@@ -4,6 +4,7 @@
         "*.rmd": "markdown",
         "led.h": "c",
         "main.h": "c",
-        "gtp_timer_oc_pwm.h": "c"
+        "gtp_timer_oc_pwm.h": "c",
+        "gtp_timer_oc_pwmtoggle.h": "c"
     }
 }
