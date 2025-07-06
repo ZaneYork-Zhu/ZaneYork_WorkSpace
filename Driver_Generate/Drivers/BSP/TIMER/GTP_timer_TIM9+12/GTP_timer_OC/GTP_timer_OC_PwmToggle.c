@@ -4,9 +4,14 @@
  *        实现PWM信号的输出，并且可以动态调整PWM的翻转周期。同时，文件中包含了LED控制、 
  *        GPIO初始化、定时器初始化以及中断处理等功能，可用于实际的硬件控制场景。 
  * @version 0.1 
- * @date 2025年7月4日16:30:00
+ * @date 2025年7月6日23:34:16
  */ 
  
+
+/**
+ * @note :TIM9/TIM12是没有DMA功能的，所以不能使用DMA来实现输出比较通道的翻转模式。
+ *         只能使用轮询的方式来实现。
+ */
 #include "GTP_timer_OC_PwmToggle.h" 
 #include "led.h" 
 #include <stdio.h> 

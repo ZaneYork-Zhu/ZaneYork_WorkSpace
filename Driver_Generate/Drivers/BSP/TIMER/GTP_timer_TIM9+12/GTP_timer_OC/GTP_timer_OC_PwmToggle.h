@@ -24,10 +24,10 @@
 
 #define ARR_MAX_VALUE                        0x5000 // ARR的最大值
 
-void GTP_text(void);
+extern void GTP_text(void);
 static void GPIO_CH1_Init(uint8_t pinPull);
-void __Set_GTP_OC_PwmToggle(uint16_t Period);
-void GTP_OC_PwmToggle_TimerInit(TIM_TypeDef* TimInstance,uint16_t arr, uint16_t psc,uint8_t setARPE,uint8_t setOCMode);
+extern void __Set_GTP_OC_PwmToggle(uint16_t Period);
+extern void GTP_OC_PwmToggle_TimerInit(TIM_TypeDef* TimInstance,uint16_t arr, uint16_t psc,uint8_t setARPE,uint8_t setOCMode);
 
 
 #endif // __GTP_TIMER_OC_PWM_TOGGLE_H_
