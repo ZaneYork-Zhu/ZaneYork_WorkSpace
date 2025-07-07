@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "GTP_timer_IT.h"
+#include "TIM_base.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -81,8 +81,6 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-   uartInit(USART1,115200);
-   printf("Hello world!!\r\n");
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -96,7 +94,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
     //BaseTimer_Test();
-    GTP_text(); // Initialize and start the timer, toggle LED every 500ms
+    Tim_base_Test();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

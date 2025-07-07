@@ -5,6 +5,9 @@
         "led.h": "c",
         "main.h": "c",
         "gtp_timer_oc_pwm.h": "c",
-        "gtp_timer_oc_pwmtoggle.h": "c"
+        "gtp_timer_oc_pwmtoggle.h": "c",
+        "tim_base.h": "c",
+        "limits": "c",
+        "memory": "c"
     }
 }

@@ -333,7 +333,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Drivers/BSP/debug_com;..\Drivers\BSP\OLED;..\Drivers\BSP\OLED\oled_SPI\hardware;..\Drivers\BSP\LED;..\Drivers\BSP\TIMER\GTP_timer_TIM9+12\GTP_timer;..\Drivers\BSP\TIMER\GTP_timer_TIM9+12\GTP_timer_OC</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Drivers/BSP/debug_com;..\Drivers\BSP\LED;..\Drivers\BSP\TIMER</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -636,9 +636,9 @@
               <FilePath>..\Drivers\BSP\LED\led.c</FilePath>
             </File>
             <File>
-              <FileName>GTP_timer_OC_PwmToggle.c</FileName>
+              <FileName>TIM_base.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Drivers\BSP\TIMER\GTP_timer_TIM9+12\GTP_timer_OC\GTP_timer_OC_PwmToggle.c</FilePath>
+              <FilePath>..\Drivers\BSP\TIMER\TIM_base.c</FilePath>
             </File>
           </Files>
         </Group>
