@@ -7,7 +7,7 @@ TIM_HandleTypeDef g_tim_base_handle = {0};
 DMA_HandleTypeDef g_dma_UpdateEvent_handle = {0};
 
 uint16_t g_tim_base_dma_buffer[] = {20000,30000,40000,50000}; // DMA传输数据缓冲区
-static uint8_t DMA_FinishFlag = 0; // DMA传输完成标志位
+static uint8_t DMA_TIM_Update_FinishFlag = 0; // DMA传输完成标志位
 void Tim_base_Test(void)
 {
     
@@ -15,7 +15,7 @@ void Tim_base_Test(void)
     uartInit(USART1, 115200); // 初始化串口1,波特率115200
     printf("BASE_TIM <<<<Update>>>> test start !!!\r\n");
     // 初始化定时器基础功能
-    Tim_base_Init(BASE_TIM, 10000, 16800, 1); // BASE_TIM, 自动重装载值10000, 预分频系数16800, 不使能自动重载预装载
+    Tim_base_Init(BASE_TIM, 10000, 16800, 0); // BASE_TIM, 自动重装载值10000, 预分频系数16800, 不使能自动重载预装载
     while (1)
     {
 #if TIM_POLLING_ENABLE
@@ -195,9 +195,9 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
  */
 void DMA2_Stream5_IRQHandler(void)
 {
-    DMA_FinishFlag = 1; // 设置DMA传输完成标志位
+    DMA_TIM_Update_FinishFlag = 1; // 设置DMA传输完成标志位
     HAL_DMA_IRQHandler(&g_dma_UpdateEvent_handle);
-    DMA_FinishFlag = 0; // 清除DMA传输完成标志位
+    DMA_TIM_Update_FinishFlag = 0; // 清除DMA传输完成标志位
 }
 
 void BASE_TIM_IRQHandler(void)
@@ -221,27 +221,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == BASE_TIM)
     {
 #if TIM_DMA_NORMAL_ENABLE
-        /*htim->hdma[TIM_DMA_ID_UPDATE]->State 与 g_dma_UpdateEvent_handle是等价的 */
-        // 检查定时器状态是否为就绪状态
-        if(htim->hdma[TIM_DMA_ID_UPDATE]->State == HAL_DMA_STATE_READY){
-            htim->hdma[TIM_DMA_ID_UPDATE]->State  = HAL_DMA_STATE_BUSY; // 设置DMA状态为忙
-            LED0_TOGGLE(); // 翻转LED0状态
-            printf("TIM base Update Event DMA finish !!!\r\n");
-            HAL_DMA_DeInit(&g_dma_UpdateEvent_handle); // 停止DMA传输
-        }
-        else{
-            static uint8_t num = 0;
-            LED1_TOGGLE(); // 翻转LED1状态
-            printf("TIM base Update Event IT %d !!!\r\n", num);
-            if (num >= 10) // 每10次更新事件打印一次
-            {
-                printf("TIM base Count IT !!! count: %d\r\n", num);
-                HAL_TIM_Base_Stop(&g_tim_base_handle); // 停止定时器
-            }
-            num++;
-        }
-#else 
-        if(!DMA_FinishFlag)
+        if(!DMA_TIM_Update_FinishFlag)
         {
             static uint8_t num = 0;
             /**
@@ -251,12 +231,31 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
             printf("TIM base Update Event num = %d ,ARRvalue = %d!!!\r\n",num,__HAL_TIM_GetAutoreload(&g_tim_base_handle));
             num++;
         }
-        if(DMA_FinishFlag)
+        if(DMA_TIM_Update_FinishFlag)
         {
-            DMA_FinishFlag = 0; // 清除DMA传输完成标志位
+            DMA_TIM_Update_FinishFlag = 0; // 清除DMA传输完成标志位
             LED0_TOGGLE(); // 翻转LED0状态
             printf("TIM base Update Event DMA finish !!!\r\n");
             HAL_DMA_DeInit(&g_dma_UpdateEvent_handle); // 停止DMA传输
+        }
+
+#else 
+        if(!DMA_TIM_Update_FinishFlag)
+        {
+            static uint8_t num = 1;
+            /**
+             * @note :注意这里没办法用标志位判断DMA[循环模式下]是否完成-->因为TIM_DMA中没有修改标志位
+             */
+            LED1_TOGGLE(); // 翻转LED1状态
+            printf("TIM base Update Event num = %d ,ARRvalue = %d!!!\r\n",num,__HAL_TIM_GetAutoreload(&g_tim_base_handle));
+            num++;
+        }
+        if(DMA_TIM_Update_FinishFlag)
+        {
+            DMA_TIM_Update_FinishFlag = 0; // 清除DMA传输完成标志位
+            LED0_TOGGLE(); // 翻转LED0状态
+            printf("TIM base Update Event DMA finish !!!\r\n");
+            //HAL_DMA_DeInit(&g_dma_UpdateEvent_handle); // 停止DMA传输
         }
 
 #endif // TIM_DMA_NORMAL_ENABLE

@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "TIM_base.h"
+#include "TIM_External_clock.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -94,7 +94,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
     //BaseTimer_Test();
-    Tim_base_Test();
+    //Tim_base_Test();
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
