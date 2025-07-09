@@ -95,7 +95,6 @@ int main(void)
     /* USER CODE END WHILE */
     //BaseTimer_Test();
     //Tim_base_Test();
-    TIM_External_Test(); // 测试外部时钟定时器
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
