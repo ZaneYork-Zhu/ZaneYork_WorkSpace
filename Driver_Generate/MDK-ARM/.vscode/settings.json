@@ -8,6 +8,7 @@
         "gtp_timer_oc_pwmtoggle.h": "c",
         "tim_base.h": "c",
         "limits": "c",
-        "memory": "c"
+        "memory": "c",
+        "tim_external_clock.h": "c"
     }
 }
