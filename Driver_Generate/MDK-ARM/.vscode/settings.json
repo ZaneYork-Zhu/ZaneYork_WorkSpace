@@ -9,6 +9,8 @@
         "tim_base.h": "c",
         "limits": "c",
         "memory": "c",
-        "tim_external_clock.h": "c"
+        "tim_external_clock.h": "c",
+        "debug_com.h": "c",
+        "tim_ic_mode.h": "c"
     }
 }

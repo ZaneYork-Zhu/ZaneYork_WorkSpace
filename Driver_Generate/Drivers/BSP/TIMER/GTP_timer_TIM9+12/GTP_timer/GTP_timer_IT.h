@@ -7,12 +7,12 @@ extern TIM_HandleTypeDef tim_GTP_handle;
 
 #define GTP_TIMX_POLLING_ENABLE                         0  /* 0: 禁止轮询模式, 1: 允许轮询模式 */
 #define GTP_TIMX_INT_IT_ENABLE                          0  /* 0: 禁止中断模式, 1: 允许中断模式 */
-#define GTP_TIMX_IC_ENABLE                              0  /* 0: 禁止输入捕获, 1: 允许输入捕获 */
+#define GTP_TIMX_IC_ENABLE                              1  /* 0: 禁止输入捕获, 1: 允许输入捕获 */
 #define GTP_TIMX_IC_IT_ENABLE                           0  /* 0: 禁止输入捕获中断, 1: 允许输入捕获中断 */
 
 
 #define GTP_TIMX_OC_PWM_DC_HALF_ENABLE                  0  /* 0: 禁止输出比较PWM占空比为50%, 1: 允许输出比较PWM占空比为50% */
-#define GTP_TIMX_OC_PWM_IT_DC_HALF_ENABLE               1  /* 0: 禁止输出比较PWM占空比为50%中断, 1: 允许输出比较PWM占空比为50%中断 */
+#define GTP_TIMX_OC_PWM_IT_DC_HALF_ENABLE               0  /* 0: 禁止输出比较PWM占空比为50%中断, 1: 允许输出比较PWM占空比为50%中断 */
 #define GTP_TIMX_OC_PWM_DC_CHANGE_ENABLE                0  /* 0: 禁止输出比较PWM占空比可调, 1: 允许输出比较PWM占空比可调 */
 #define GTP_TIMX_OC_PWM_IT_DC_CHANGE_ENABLE             0  /* 0: 禁止输出比较PWM占空比可调中断, 1: 允许输出比较PWM占空比可调中断 */
 #define GTP_TIMX_OC_FORCE_ENABLE                        0  /* 0: 禁止输出比较强制, 1: 允许输出比较强制 */

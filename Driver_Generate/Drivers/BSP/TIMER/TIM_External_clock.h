@@ -37,7 +37,7 @@
 #define TIM_POLLING_ENABLE                  (0)  // 0: 禁止轮询模式, 1: 允许轮询模式
 #define TIM_IT_ENABLE                       (0)  // 0: 禁止中断模式, 1: 允许中断模式
 #define TIM_DMA_ENABLE                      (1)  // 0: 禁止DMA模式, 1: 允许DMA模式
-#define TIM_DMA_NORMAL_ENABLE               (0)  // 0: 开启DMA的Cycle模式, 1: 开启DMA的Normal正常模式
+#define TIM_DMA_NORMAL_ENABLE               (1)  // 0: 开启DMA的Cycle模式, 1: 开启DMA的Normal正常模式
 
 #define TIM_IT_PreemptPriority              (1)  // 中断优先级
 #define TIM_IT_SubPriority                  (0)  // 中断子优先级
@@ -47,6 +47,7 @@
 #define TIM_EXTERNAL_MODE1_TI1ED_ENABLE     (0)  // 0: 禁止外部时钟TI1ED模式, 1: 允许外部时钟TI1ED模式
 #define TIM_EXTERNAL_MODE1_TIxFPx_ENABLE    (0)  // 0: 禁止外部时钟TIxFPx模式, 1: 允许外部时钟TIxFPx模式
 #define TIM_EXTERNAL_MODE1_ETRMODE1_ENABLE  (1)  // 0: 禁止外部时钟ETRMODE1模式, 1: 允许外部时钟ETRMODE1模式
+#define TIM_EXTERNAL_MODE2_ETRMODE2_ENABLE  (0)  // 0: 禁止外部时钟ETRMODE2模式, 1: 允许外部时钟ETRMODE2模式
 
 extern void TIM_External_Test(void);
 extern void TIM_External_clock_Init(TIM_TypeDef* TimInstance, uint32_t arr, uint32_t psc,uint32_t setARPE ,uint32_t rep ,uint32_t countMode);

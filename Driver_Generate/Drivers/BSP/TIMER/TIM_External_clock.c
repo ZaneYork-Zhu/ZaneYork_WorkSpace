@@ -106,6 +106,17 @@ void TIM_External_clock_Init(TIM_TypeDef* TimInstance, uint32_t arr, uint32_t ps
     g_sClockSourceConfig_Handle.ClockPolarity = TIM_CLOCKPOLARITY_INVERTED; // 外部时钟ETR引脚的极性->反相
 
 #endif
+
+#if TIM_EXTERNAL_MODE2_ETRMODE2_ENABLE 
+    /**
+     * @note :1.实现功能->每当ETR发生变化时，产生一次更新事件[相当于是单边沿检测触发]
+     *        2.一定要配置ClockDivision参数->ClockFilter->这个参数作为输入捕获1滤波器的采样频率
+     * @warning :这里的ETR是边沿检测模式-> TIM_CLOCKPOLARITY_RISING ->按下产生1次触发事件
+     */
+    g_sClockSourceConfig_Handle.ClockSource = TIM_CLOCKSOURCE_ETRMODE2; 
+    g_sClockSourceConfig_Handle.ClockPolarity = TIM_CLOCKPOLARITY_INVERTED; // 外部时钟ETR引脚的极性->正相
+
+#endif
     g_sClockSourceConfig_Handle.ClockPrescaler = EXTERNAL_CLK_Prescaler; // 外部时钟不分频
     g_sClockSourceConfig_Handle.ClockFilter = EXTERNAL_CLK_Filter; // 外部时钟滤波
     if (HAL_TIM_ConfigClockSource(&g_TIM_ExternalClock_Handle, &g_sClockSourceConfig_Handle) != HAL_OK)
