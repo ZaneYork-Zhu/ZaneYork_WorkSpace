@@ -653,9 +653,9 @@
               <FilePath>..\Drivers\BSP\LED\led.c</FilePath>
             </File>
             <File>
-              <FileName>TIM_IC_Mode.c</FileName>
+              <FileName>TIM_OC_Mode.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Drivers\BSP\TIMER\TIM_IC_Mode.c</FilePath>
+              <FilePath>..\Drivers\BSP\TIMER\TIM_OC_Mode.c</FilePath>
             </File>
           </Files>
         </Group>

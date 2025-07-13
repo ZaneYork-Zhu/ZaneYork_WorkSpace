@@ -162,71 +162,46 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>604</LineNumber>
+          <LineNumber>703</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134223128</Address>
+          <Address>134222138</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Drivers\BSP\TIMER\TIM_IC_Mode.c</Filename>
+          <Filename>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\driver_generate\../Drivers/BSP/TIMER/TIM_IC_Mode.c\604</Expression>
+          <Expression>\\driver_generate\../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c\703</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>593</LineNumber>
+          <LineNumber>703</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134219852</Address>
+          <Address>134222210</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Drivers\BSP\TIMER\TIM_IC_Mode.c</Filename>
+          <Filename>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\driver_generate\../Drivers/BSP/TIMER/TIM_IC_Mode.c\593</Expression>
+          <Expression>\\driver_generate\../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c\703</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>htim-&gt;State</ItemText>
+          <ItemText>g_TIM_OCToggle_Handle</ItemText>
         </Ww>
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>g_tim_base_handle</ItemText>
-        </Ww>
-        <Ww>
-          <count>2</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>num</ItemText>
-        </Ww>
-        <Ww>
-          <count>3</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>ARR_Update_Num</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>(sizeof(g_TIM_DMA_ARRbuffer)/sizeof(g_TIM_DMA_ARRbuffer[0]))</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>trigger_count</ItemText>
-        </Ww>
-        <Ww>
-          <count>6</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>__HAL_TIM_GET_COUNTER(htim) + 1</ItemText>
+          <ItemText>g_TIM_OC_Base_Struct</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
@@ -273,7 +248,7 @@
       <pMultCmdsp></pMultCmdsp>
       <SystemViewers>
         <Entry>
-          <Name>System Viewer\DMA1</Name>
+          <Name>System Viewer\TIM2</Name>
           <WinId>35905</WinId>
         </Entry>
       </SystemViewers>
@@ -680,8 +655,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Drivers\BSP\TIMER\TIM_IC_Mode.c</PathWithFileName>
-      <FilenameWithoutPath>TIM_IC_Mode.c</FilenameWithoutPath>
+      <PathWithFileName>..\Drivers\BSP\TIMER\TIM_OC_Mode.c</PathWithFileName>
+      <FilenameWithoutPath>TIM_OC_Mode.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

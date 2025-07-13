@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "TIM_IC_Mode.h"
+#include "TIM_OC_Mode.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -97,7 +97,8 @@ int main(void)
     //TIM_External_Test(); // 调用外部时钟测试函数
 
     /* USER CODE BEGIN 3 */
-    TIM_IC_MODE_Test(); // 调用输入捕获模式测试函数
+    //TIM_IC_MODE_Test(); // 调用输入捕获模式测试函数
+    TIM_OC_MODE_Test(); // 调用输出比较模式测试函数
   }
   /* USER CODE END 3 */
 }
