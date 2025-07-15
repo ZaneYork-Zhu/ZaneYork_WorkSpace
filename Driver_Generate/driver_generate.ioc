@@ -2,10 +2,12 @@
 CAD.formats=[]
 CAD.pinconfig=Dual
 CAD.provider=
+CAN1.BS1=CAN_BS1_1TQ
+CAN1.BS2=CAN_BS2_1TQ
 CAN1.CalculateBaudRate=875000
 CAN1.CalculateTimeBit=1142
 CAN1.CalculateTimeQuantum=380.95238095238096
-CAN1.IPParameters=CalculateTimeQuantum,CalculateTimeBit,CalculateBaudRate
+CAN1.IPParameters=CalculateTimeQuantum,CalculateTimeBit,CalculateBaudRate,BS1,BS2
 Dma.I2C1_RX.0.Direction=DMA_PERIPH_TO_MEMORY
 Dma.I2C1_RX.0.FIFOMode=DMA_FIFOMODE_DISABLE
 Dma.I2C1_RX.0.Instance=DMA1_Stream0

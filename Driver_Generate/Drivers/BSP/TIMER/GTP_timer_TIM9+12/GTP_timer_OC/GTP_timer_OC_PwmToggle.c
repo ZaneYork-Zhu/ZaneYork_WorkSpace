@@ -13,6 +13,9 @@
  *         只能使用轮询的方式来实现。
  */
 #include "GTP_timer_OC_PwmToggle.h" 
+#include "GTP_timer_OC_PwmChange.h"
+
+
 #include "led.h" 
 #include <stdio.h> 
  

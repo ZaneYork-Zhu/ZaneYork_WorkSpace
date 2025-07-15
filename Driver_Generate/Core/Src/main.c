@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "TIM_OC_Mode.h"
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -92,9 +93,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    //BaseTimer_Test();
-    //Tim_base_Test();
-    //TIM_External_Test(); // 调用外部时钟测试函数
 
     /* USER CODE BEGIN 3 */
     //TIM_IC_MODE_Test(); // 调用输入捕获模式测试函数
