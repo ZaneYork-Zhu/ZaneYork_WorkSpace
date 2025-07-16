@@ -1,5 +1,5 @@
-#ifndef __TIM_OC_MODE_H_
-#define __TIM_OC_MODE_H_
+#ifndef __TIM_OC_TOGGLE_MODE_H_
+#define __TIM_OC_TOGGLE_MODE_H_
 
 #include "main.h"   
 
@@ -62,5 +62,5 @@ static void LED_Display_init(void);
 static void GPIO_OC_CHx_Init(void);
 static void DMA_OC_CHx_Init(TIM_HandleTypeDef *htim);
 
-#endif /* __TIM_OC_MODE_H_ */
+#endif /* __TIM_OC_TOGGLE_MODE_H_ */
 
