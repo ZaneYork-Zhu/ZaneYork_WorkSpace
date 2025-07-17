@@ -28,7 +28,7 @@
 "driver_generate\system_stm32f4xx.o"
 "driver_generate\debug_com.o"
 "driver_generate\led.o"
-"driver_generate\tim_oc_force_mode.o"
+"driver_generate\tim_oc_pwm_mode.o"
 --strict --scatter "driver_generate\driver_generate.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

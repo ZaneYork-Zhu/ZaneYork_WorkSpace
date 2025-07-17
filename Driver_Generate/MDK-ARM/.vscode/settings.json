@@ -17,6 +17,7 @@
         "stdio.h": "c",
         "gtp_timer_oc_pwmchange.h": "c",
         "tim_oc_active_mode.h": "c",
-        "tim_oc_force_mode.h": "c"
+        "tim_oc_force_mode.h": "c",
+        "tim_oc_pwm_mode.h": "c"
     }
 }

@@ -1,5 +1,5 @@
-#ifndef __TIM_OC_TOGGLE_MODE_H_
-#define __TIM_OC_TOGGLE_MODE_H_
+#ifndef __TIM_OC_PWM_MODE_H_
+#define __TIM_OC_PWM_MODE_H_
 
 #include "main.h"   
 
@@ -25,11 +25,11 @@
 #define TIM_OC_DMA_FLAG_TCIF                      DMA_FLAG_TCIF1_5
 #define __HAL_RCC_EXTERNAL_DMA_CLK_ENABLE()       do{ __HAL_RCC_DMA1_CLK_ENABLE(); }while(0)
 
-#define TIM_OC_TOGGLE_MODE_ENABLE                   (1) // 0: 禁止输出比较翻转模式使能 ,1: 允许输出比较翻转模式使能
+#define TIM_OC_PWM_MODE_ENABLE                       (1) // 0: 禁止输出比较PWM模式使能 ,1: 允许输出比较PWM模式使能
 
-#define TIM_OC_MODE_POLLING_ENABLE                   (0) // 0: 轮询方式关闭 ,1: 轮询方式使能
+#define TIM_OC_MODE_POLLING_ENABLE                   (1) // 0: 轮询方式关闭 ,1: 轮询方式使能
 #define TIM_OC_MODE_IT_ENABLE                        (0) // 0: 中断方式关闭 ,1: 中断方式使能
-#define TIM_OC_MODE_DMA_ENABLE                       (1) // 0: DMA方式关闭 ,1: DMA方式使能
+#define TIM_OC_MODE_DMA_ENABLE                       (0) // 0: DMA方式关闭 ,1: DMA方式使能
 
 #define TIM_CHANNEL_FOR_DIRECT_MODE_ENABLE           (1) // 0: 禁止直接模式 ,1: 允许直接模式使能
 /*combine mode 和single mode 不能同时使能*/
@@ -57,10 +57,10 @@ extern void TIM_Base_Init(void);
 extern void TIM_OC_MODE_Test(void);
 extern void TIM_OC_combine_Mode_Init(void);
 extern void TIM_OC_DMAburst_Mode_Init(void);
-extern void TIM_OC_Toggle_Mode_Init(NEW_TIM_HandleTypeDef *pBaseStr, TIM_OC_InitTypeDef *pOCInitStr);
+extern void TIM_OC_Pwm_Mode_Init(NEW_TIM_HandleTypeDef *pBaseStr, TIM_OC_InitTypeDef *pOCInitStr);
 static void LED_Display_init(void);
 static void GPIO_OC_CHx_Init(void);
 static void DMA_OC_CHx_Init(TIM_HandleTypeDef *htim);
 
-#endif /* __TIM_OC_TOGGLE_MODE_H_ */
+#endif /* __TIM_OC_PWM_MODE_H_ */
 
