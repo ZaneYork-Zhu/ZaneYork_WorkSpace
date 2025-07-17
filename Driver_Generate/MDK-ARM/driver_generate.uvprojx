@@ -635,6 +635,11 @@
               <FileType>1</FileType>
               <FilePath>..\Drivers\BSP\LED\led.c</FilePath>
             </File>
+            <File>
+              <FileName>TIM_ICandOC_Combine_OPM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\BSP\TIMER\TIM_ICandOC_Combine_OPM.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
