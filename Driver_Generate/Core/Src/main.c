@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "TIM_ICandOC_Combine_OPM.h"
+#include "TIM_Slave_Mode.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -96,7 +96,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     //TIM_IC_MODE_Test(); // 调用输入捕获模式测试函数
-    TIM_OC_MODE_Test(); // 调用输出比较模式测试函数
+    TIM_Slave_Mode_Test(); // 调用从模式复位初始化函数
   }
   /* USER CODE END 3 */
 }

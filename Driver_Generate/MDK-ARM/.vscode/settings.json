@@ -20,6 +20,7 @@
         "tim_oc_force_mode.h": "c",
         "tim_oc_pwm_mode.h": "c",
         "tim_oc_opm_mode.h": "c",
-        "tim_icandoc_combine_opm.h": "c"
+        "tim_icandoc_combine_opm.h": "c",
+        "tim_slave_mode.h": "c"
     }
 }
