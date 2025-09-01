@@ -20,8 +20,10 @@ TIM_HandleTypeDef TIM_Base_Struct = {
         .RepetitionCounter = 0, //重复计数器值：不重复
         .AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE //自动重载预载：关闭
     },
+    
     .Channel = HAL_TIM_ACTIVE_CHANNEL_1,   //通道1
 };
+
 
 TIM_SlaveConfigTypeDef TIM_Slave_Struct = {
 #if TIM_SLAVE_RESET_MODE
@@ -76,7 +78,7 @@ void TIM_Slave_Mode_Test(void)
         }
         if(__HAL_TIM_GET_FLAG(&g_TIM_SlaveReset_Base_Handle, TIM_FLAG_TRIGGER)){
             __HAL_TIM_CLEAR_FLAG(&g_TIM_SlaveReset_Base_Handle, TIM_FLAG_TRIGGER); // 清除触发标志
-            printf("TIM Trigger Event generated Num = %lu!!\r\n", ++g_TIM_SlaveReset_TriggerNum); // 打印触发事件计数
+            printf("TIM Trigger Event generated Num = %u!!\r\n", ++g_TIM_SlaveReset_TriggerNum); // 打印触发事件计数
         }
         HAL_Delay(100); // 延时1秒
 

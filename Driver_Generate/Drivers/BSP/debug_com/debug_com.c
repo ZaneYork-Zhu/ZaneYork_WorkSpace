@@ -353,13 +353,13 @@ HAL_StatusTypeDef UartPollingFixedSelfTransceive(UART_HandleTypeDef *huart, uint
  
     #endif
 
-struct __FILE
-{
-    int handle;
-    /* Whatever you require here. If the only file you are using is */
-    /* standard output using printf() for debugging, no file handling */
-    /* is required. */
-};        
+//struct __FILE
+//{
+//    int handle;
+//    /* Whatever you require here. If the only file you are using is */
+//    /* standard output using printf() for debugging, no file handling */
+//    /* is required. */
+//};        
 /* 不使用半主机模式，至少需要重定义_ttywrch\_sys_exit\_sys_command_string函数,以同时兼容AC6和AC5模式 */
 int _ttywrch(int ch)
 {
