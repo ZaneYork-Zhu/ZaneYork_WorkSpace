@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "oled_hardware_spi.h": "c",
+        "*.rmd": "markdown",
+        "tim_external_clock.h": "c"
+    }
+}
