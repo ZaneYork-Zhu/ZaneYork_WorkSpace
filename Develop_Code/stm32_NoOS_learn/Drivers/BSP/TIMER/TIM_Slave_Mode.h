@@ -8,7 +8,7 @@
 #define TIMx_SLAVE_CHx_GPIO_Port                     GPIOA
 #define TIMx_SLAVE_CHx_Mode                          GPIO_MODE_AF_PP
 #define TIMx_SLAVE_CHx_AF_FOR_TIM                    GPIO_AF1_TIM2
-#define TIMx_SLAVE_CHx_Pull                          GPIO_NOPULL
+#define TIMx_SLAVE_CHx_Pull                          GPIO_PULLDOWN
 #define TIMx_SLAVE_CHx_Speed                         GPIO_SPEED_FREQ_VERY_HIGH
 #define __HAL_RCC_TIMx_SLAVE_CHx_CLK_ENABLE()        do {__HAL_RCC_GPIOA_CLK_ENABLE();} while(0)
 
@@ -28,12 +28,14 @@
 
 
 
-#define TIM_POLLING_ENABLE                          (1) // 0: 禁止轮询模式使能 ,1: 允许轮询模式使能
-#define TIM_IT_ENABLE                               (0) // 0: 禁止中断使能 ,1: 允许中断使能
+#define TIM_POLLING_ENABLE                          (0) // 0: 禁止轮询模式使能 ,1: 允许轮询模式使能
+#define TIM_IT_ENABLE                               (1) // 0: 禁止中断使能 ,1: 允许中断使能
 #define TIM_DMA_ENABLE                              (0) // 0: 禁止DMA使能 ,1: 允许DMA使能
+#define TIM_ETR_GPIO                                (0) // 0: 禁止ETR通道使能,1:允许ETR通道使能
+#define TIM_TI1_GPIO                                (1) // 0: 禁止TI1通道使能,1:允许TI1通道使能
 
-#define TIM_SLAVE_RESET_MODE                        (1) // 0: 禁止复位模式使能 ,1: 允许复位模式使能
-#define TIM_SLAVE_GATED_MODE                        (0) // 0: 禁止门控模式使能 ,1: 允许门控模式使能
+#define TIM_SLAVE_RESET_MODE                        (0) // 0: 禁止复位模式使能 ,1: 允许复位模式使能
+#define TIM_SLAVE_GATED_MODE                        (1) // 0: 禁止门控模式使能 ,1: 允许门控模式使能
 #define TIM_SLAVE_TRIGGER_MODE                      (0) // 0: 禁止触发模式使能 ,1: 允许触发模式使能
 #define TIM_SLAVE_EXTERNAL_MODE                     (0) // 0: 禁止外部时钟+触发模式使能 ,1: 允许外部时钟+触发模式使能
 
@@ -50,6 +52,8 @@
 
 #define TIM_IT_PreemptPriority                       (1)  // 中断优先级
 #define TIM_IT_SubPriority                           (0)  // 中断子优先级
+#define TIM_IT_TRIGGER_PreemptPriority               (1)  // 触发中断优先级
+#define TIM_IT_TRIGGER_SubPriority                   (1)  // 触发中断子优先级
 #define TIM_DMA_PreemptPriority                      (0)  // DMA中断优先级
 #define TIM_DMA_SubPriority                          (0)  // DMA中断子优先级
 
@@ -65,6 +69,8 @@ typedef struct nTIM_IC_InitTypeDef
 
 static void GPIO_IC_CHx_Init(void);
 extern void TIM_Slave_Mode_Test(void);
-static HAL_StatusTypeDef TIM_SlaveReset_Mode_Init(TIM_HandleTypeDef *pBaseStr, TIM_SlaveConfigTypeDef *pSlaveStr,nTIM_IC_InitTypeDef *pICStr);
+HAL_StatusTypeDef TIM_SlaveReset_Mode_Init(TIM_HandleTypeDef *pBaseStr, TIM_SlaveConfigTypeDef *pSlaveStr,nTIM_IC_InitTypeDef *pICStr);
+HAL_StatusTypeDef TIM_SlaveGated_Mode_Init(TIM_HandleTypeDef *pBaseStr, TIM_SlaveConfigTypeDef *pSlaveStr,nTIM_IC_InitTypeDef *pICStr);
+HAL_StatusTypeDef TIM_SlaveTrigger_Mode_Init(TIM_HandleTypeDef *pBaseStr, TIM_SlaveConfigTypeDef *pSlaveStr,nTIM_IC_InitTypeDef *pICStr);
 #endif /* __TIM_SLAVE_MODE_H_ */
 
