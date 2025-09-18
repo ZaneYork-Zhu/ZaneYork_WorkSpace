@@ -138,18 +138,37 @@ int fputc( int ch, FILE *f );
 /* The queue used to send messages to the LCD task. */
 QueueHandle_t xLCDQueue;
 
+void Task1_function(void * param)
+{
+	while(1)
+	{
+		printf("1");
+	}
+}
+
+void Task2_function(void * param)
+{
+	while(1)
+	{
+		printf("2");
+	}
+}
+
 /*-----------------------------------------------------------*/
 
 int main( void )
 {
+	TaskHandle_t xHandleTask1;
 #ifdef DEBUG
   debug();
 #endif
 
 	prvSetupHardware();
 
-	printf("hello world !!\r\n");
+	printf("hello world !!");
 	/* Start the scheduler. */
+	xTaskCreate(Task1_function,"Task1",100,NULL,1,&xHandleTask1);
+	xTaskCreate(Task2_function,"Task1",100,NULL,1,NULL);
 	vTaskStartScheduler();
 
 	/* Will only get here if there was not enough heap space to create the

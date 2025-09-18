@@ -1,0 +1,24 @@
+*** Using Compiler 'V5.06 update 1 (build 61)', folder: 'D:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'Target 1'
+compiling main.c...
+main.c(145): warning:  #257-D: const variable "xHandleTask1" requires an initializer
+  	TaskHandle_t const xHandleTask1;
+main.c(154): error:  #167: argument of type "char *" is incompatible with parameter of type "TaskFunction_t"
+  	xTaskCreate("Task1",100,
+ULL,1,&xHandleTask1);
+main.c(154): error:  #167: argument of type "int" is incompatible with parameter of type "const char *const"
+  	xTaskCreate("Task1",100,
+ULL,1,&xHandleTask1);
+main.c(154): error:  #167: argument of type "int" is incompatible with parameter of type "void *const"
+  	xTaskCreate("Task1",100,
+ULL,1,&xHandleTask1);
+main.c(154): error:  #167: argument of type "const TaskHandle_t *" is incompatible with parameter of type "UBaseType_t"
+  	xTaskCreate("Task1",100,
+ULL,1,&xHandleTask1);
+main.c(154): error:  #165: too few arguments in function call
+  	xTaskCreate("Task1",100,
+ULL,1,&xHandleTask1);
+main.c: 1 warning, 5 errors
+".\RTOSDemo.axf" - 5 Error(s), 1 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:00
