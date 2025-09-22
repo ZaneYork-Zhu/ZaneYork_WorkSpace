@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "TIM_Slave_Mode.h"
+#include "TIM_IC_PWMandSlave.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -93,10 +93,9 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    TIM_IC_PWMandSlave_Test();
     /* USER CODE BEGIN 3 */
-    //TIM_IC_MODE_Test(); // 调用输入捕获模式测试函数
-    TIM_Slave_Mode_Test(); // 调用从模式复位初始化函数
+
   }
   /* USER CODE END 3 */
 }
