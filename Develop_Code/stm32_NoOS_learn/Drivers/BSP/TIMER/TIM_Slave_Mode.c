@@ -7,10 +7,13 @@ uint32_t g_TIM_SlaveReset_TriggerNum = 0; // 触发事件计数
 uint32_t g_TIM_SlaveUpdate_Num = 0; // 更新事件计数
 uint32_t g_TIM_CNT = 0;
 TIM_IC_InitTypeDef g_TIM_IC_Handle = {0};
+
+//从模式配置句柄
 TIM_SlaveConfigTypeDef g_TIM_Slave_Handle = {0};
+//时钟配置句柄
+TIM_ClockConfigTypeDef g_TIM_Clock_Handle = {0};
 
-
-/*从模式句柄*/
+/*TIM定时器句柄*/
 #if TIM_SLAVE_RESET_MODE
     TIM_HandleTypeDef g_TIM_SlaveReset_Base_Handle = {0};
 #elif TIM_SLAVE_GATED_MODE
@@ -25,8 +28,17 @@ TIM_HandleTypeDef TIM_Base_Struct = {
     .Instance = TIMx_SLAVE_INSTANCE,    //定时器实例
     .Init = {
         /*触发模式->设置period = 1000->要不然看不到更新的效果 太大了*/
-        .Period = 0x100000000-1, //自动重载寄存器值
-        .Prescaler = 8400-1,   //预分频值
+        #if TIM_SLAVE_TRIGGER_MODE
+            .Period = 1000-1, //自动重载寄存器值
+        #else
+            .Period = 0x100000000-1, //自动重载寄存器值
+        #endif
+        #if TIM_SLAVE_EXTERNAL_CLK
+            .Prescaler = 1-1, //预分频值
+            .Period = 5-1,
+        #else
+            .Prescaler = 8400-1,   //预分频值
+        #endif /* TIM_SLAVE_EXTERNAL_CLK */
         .CounterMode = TIM_COUNTERMODE_UP, //计数模式
         .ClockDivision = TIM_CLOCKDIVISION_DIV1, //时钟分频：不分频
         .RepetitionCounter = 0, //重复计数器值：不重复
@@ -44,7 +56,7 @@ TIM_SlaveConfigTypeDef TIM_Slave_Struct = {
         .InputTrigger = TIM_TS_ETRF, //输入触发源：ETR
         .TriggerPolarity = TIM_TRIGGERPOLARITY_NONINVERTED, //检测方式：高电平
     #elif TIM_TI1_GPIO
-        .InputTrigger = TIM_TS_TI1F_ED, //输入触发源：TIMx_CH1
+        .InputTrigger = TIM_TS_TI1FP1, //输入触发源：TIMx_CH1
         .TriggerPolarity = TIM_TRIGGERPOLARITY_RISING, //检测方式：下降沿
     #endif  /* TIM_TI1_GPIO */
     .TriggerPrescaler = TIM_TRIGGERPRESCALER_DIV1, //触发预分频：不分频
@@ -71,12 +83,6 @@ TIM_SlaveConfigTypeDef TIM_Slave_Struct = {
     #endif
     .TriggerPrescaler = TIM_TRIGGERPRESCALER_DIV1, //触发预分频：不分频
     .TriggerFilter = 0x08                           //触发滤波器：滤波器值
-#elif TIM_SLAVE_EXTERNAL_MODE
-    .SlaveMode = TIM_SLAVEMODE_EXTERNAL1, //从模式：外部时钟+触发模式
-    .InputTrigger = TIM_TS_TI1FP1, //输入触发源：TIMx_CH1
-    .TriggerPolarity = TIM_TRIGGERPOLARITY_RISING, //触发极性：上升沿
-    .TriggerPrescaler = TIM_TRIGGERPRESCALER_DIV1, //触发预分频：不分频
-    .TriggerFilter = 0x08                           //触发滤波器：滤波器值
 #endif
 };
 
@@ -90,12 +96,27 @@ nTIM_IC_InitTypeDef TIM_IC_Struct = {
     .IC_Channel = TIM_CHANNEL_1 //通道1
 };
 
+#if TIM_SLAVE_EXTERNAL_CLK
+
+static void GPIO_ETR_Init(void);
+/**
+ * @note :此时不能用ETR作为触发源
+ */
+TIM_ClockConfigTypeDef TIM_Clock_Struct = {
+    .ClockSource = TIM_CLOCKSOURCE_ETRMODE2, //时钟源：外部时钟2 ETR
+    .ClockPolarity = TIM_CLOCKPOLARITY_RISING, //时钟极性：上升沿
+    .ClockPrescaler = TIM_CLOCKPRESCALER_DIV1, //时钟预分频：不分频
+    .ClockFilter = 0x08, //时钟滤波器：滤波器值
+};
+#endif /* TIM_SLAVE_EXTERNAL_CLK */
+
+
 void TIM_Slave_Mode_Test(void)
 {
     uartInit(USART1, 115200); // 初始化串口
     printf("TIM Slave Reset Mode Init...\r\n");
 #if TIM_SLAVE_RESET_MODE
-    TIM_SlaveReset_Mode_Init(&TIM_Base_Struct, &TIM_Slave_Struct, &TIM_IC_Struct); // 初始化定时器从模式
+    TIM_SlaveReset_Mode_Init(&TIM_Base_Struct, &TIM_Slave_Struct, &TIM_IC_Struct, &TIM_Clock_Struct); // 初始化定时器从模式
     #if TIM_POLLING_ENABLE
     while (1)
     {
@@ -116,7 +137,13 @@ void TIM_Slave_Mode_Test(void)
     #if TIM_IT_ENABLE
     while (1)
     {
-        /* code */
+        // printf("Current TIM Counter Value: %d\r\n",__HAL_TIM_GET_COUNTER(&g_TIM_SlaveReset_Base_Handle)); // 打印当前计数值
+        // if(__HAL_TIM_GET_FLAG(&g_TIM_SlaveReset_Base_Handle, TIM_FLAG_CC1)){
+        //     __HAL_TIM_CLEAR_FLAG(&g_TIM_SlaveReset_Base_Handle, TIM_FLAG_CC1); // 清除捕获/
+        //     g_TIM_SlaveReset_TriggerNum = 0; // 重置触发事件计数
+        //     printf("TIM Capture/Compare 1 Event generated!\r\n");
+        // }
+        // HAL_Delay(100); // 延时1秒
     }
     #endif /* TIM_IT_ENABLE */
 #elif TIM_SLAVE_GATED_MODE
@@ -344,7 +371,10 @@ void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim)
 #if TIM_SLAVE_RESET_MODE
 
 /************************************************************************************************************************************ */
-HAL_StatusTypeDef TIM_SlaveReset_Mode_Init(TIM_HandleTypeDef *pBaseStr, TIM_SlaveConfigTypeDef *pSlaveStr,nTIM_IC_InitTypeDef *pICStr)
+HAL_StatusTypeDef TIM_SlaveReset_Mode_Init( TIM_HandleTypeDef *pBaseStr, 
+                                            TIM_SlaveConfigTypeDef *pSlaveStr,
+                                            nTIM_IC_InitTypeDef *pICStr,
+                                            TIM_ClockConfigTypeDef *pClockStr)
 {
     /* TIM Base Config */
     g_TIM_SlaveReset_Base_Handle.Instance = pBaseStr->Instance;
@@ -380,6 +410,19 @@ HAL_StatusTypeDef TIM_SlaveReset_Mode_Init(TIM_HandleTypeDef *pBaseStr, TIM_Slav
         printf("TIM IC Config Error!\n");
         return HAL_ERROR;
     }
+#if TIM_SLAVE_EXTERNAL_CLK
+    /*TIM Clock Config*/
+    g_TIM_Clock_Handle.ClockSource = pClockStr->ClockSource;
+    g_TIM_Clock_Handle.ClockPolarity = pClockStr->ClockPolarity;
+    g_TIM_Clock_Handle.ClockPrescaler = pClockStr->ClockPrescaler;
+    g_TIM_Clock_Handle.ClockFilter = pClockStr->ClockFilter;
+    if(HAL_TIM_ConfigClockSource(&g_TIM_SlaveReset_Base_Handle, &g_TIM_Clock_Handle) != HAL_OK)
+    {
+        printf("TIM Clock Config Error!\n");
+        return HAL_ERROR;
+    }  
+    __HAL_TIM_URS_ENABLE(&g_TIM_SlaveReset_Base_Handle); // 使能更新请求源->只允许计数器溢出/更新事件产生中断或DMA请求
+#endif /* TIM_SLAVE_EXTERNAL_CLK */ 
 #if TIM_POLLING_ENABLE
     if(HAL_TIM_IC_Start(&g_TIM_SlaveReset_Base_Handle, pICStr->IC_Channel) != HAL_OK)
     {
@@ -392,6 +435,7 @@ HAL_StatusTypeDef TIM_SlaveReset_Mode_Init(TIM_HandleTypeDef *pBaseStr, TIM_Slav
         printf("TIM IC Start IT Error!\n");
         return HAL_ERROR;
     }
+    __HAL_TIM_ENABLE_IT(&g_TIM_SlaveReset_Base_Handle, TIM_IT_TRIGGER|TIM_IT_UPDATE); //触发中断函数
 #elif TIM_DMA_ENABLE
     if(HAL_TIM_IC_Start_DMA(&g_TIM_SlaveReset_Base_Handle, pICStr->IC_Channel, pICStr->IC_DMA_Buffer, pICStr->IC_DMA_Buffer_Size) != HAL_OK)
     {
@@ -406,12 +450,74 @@ void HAL_TIM_IC_MspInit(TIM_HandleTypeDef *htim)
 {
     __TIMx_SLAVE_INSTANCE_CLK_ENABLE(); // 使能TIMx时钟
     GPIO_IC_CHx_Init(); // 初始化GPIO
+#if TIM_SLAVE_EXTERNAL_CLK
+    GPIO_ETR_Init(); // 初始化ETR通道GPIO
+#endif /* TIM_SLAVE_EXTERNAL_CLK */
+#if TIM_IT_ENABLE
+    HAL_NVIC_SetPriority(TIMx_SLAVE_INSTANCE_IRQn, TIM_IT_PreemptPriority, TIM_IT_SubPriority);
+    HAL_NVIC_EnableIRQ(TIMx_SLAVE_INSTANCE_IRQn);
+    HAL_NVIC_SetPriority(TIMx_SLAVE_INSTANCE_IRQn, TIM_IT_TRIGGER_PreemptPriority, TIM_IT_TRIGGER_SubPriority);
+    HAL_NVIC_EnableIRQ(TIMx_SLAVE_INSTANCE_IRQn);
+#endif  /*TIM_SLAVE_RESET_IT*/
 }
+
+
+#if TIM_IT_ENABLE
+void TIMx_SLAVE_INSTANCE_IRQHandler(void)
+{
+    HAL_TIM_IRQHandler(&g_TIM_SlaveReset_Base_Handle);
+}
+
+/**
+ * 更新中断TIF
+ */
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+    if(htim->Instance == TIMx_SLAVE_INSTANCE)
+    {
+        __HAL_TIM_CLEAR_FLAG(htim, TIM_FLAG_UPDATE); // 清除更新中断标志
+        printf("TIM Update value ->%u\r\n", ++g_TIM_SlaveUpdate_Num);
+    }
+}
+
+/**
+ * 触发中断Trigger
+ */
+void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim)
+{
+    if(htim->Instance == TIMx_SLAVE_INSTANCE)
+    {
+        printf("TIM trigger value ->%u\r\n", ++g_TIM_SlaveReset_TriggerNum);
+    }
+}
+#endif /* TIM_IT_ENABLE */
 
 #endif /* TIM_SLAVE_RESET_MODE */
 
+
+#if TIM_SLAVE_EXTERNAL_CLK
+
 /**
- * @brief  配置TIMx的输入捕获通道
+ * @brief  配置TIMx的CH1通道GPIO->PA5
+ * @param  None
+ */
+static void GPIO_ETR_Init(void)
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    GPIO_InitStruct.Pin = GPIO_PIN_5; 
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP; 
+    GPIO_InitStruct.Pull = GPIO_PULLUP; 
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH; 
+    GPIO_InitStruct.Alternate = GPIO_AF1_TIM2; // 设置复用功能
+    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+}
+
+
+#endif /* TIM_SLAVE_EXTERNAL_CLK */
+
+/**
+ * @brief  配置TIMx的从模式：ETR通道/CH1通道GPIO->PA0
  * @param  None
  * @retval None
  */

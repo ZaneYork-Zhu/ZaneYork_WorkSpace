@@ -34,10 +34,10 @@
 #define TIM_ETR_GPIO                                (0) // 0: 禁止ETR通道使能,1:允许ETR通道使能
 #define TIM_TI1_GPIO                                (1) // 0: 禁止TI1通道使能,1:允许TI1通道使能
 
-#define TIM_SLAVE_RESET_MODE                        (0) // 0: 禁止复位模式使能 ,1: 允许复位模式使能
-#define TIM_SLAVE_GATED_MODE                        (1) // 0: 禁止门控模式使能 ,1: 允许门控模式使能
+#define TIM_SLAVE_RESET_MODE                        (1) // 0: 禁止复位模式使能 ,1: 允许复位模式使能
+#define TIM_SLAVE_GATED_MODE                        (0) // 0: 禁止门控模式使能 ,1: 允许门控模式使能
 #define TIM_SLAVE_TRIGGER_MODE                      (0) // 0: 禁止触发模式使能 ,1: 允许触发模式使能
-#define TIM_SLAVE_EXTERNAL_MODE                     (0) // 0: 禁止外部时钟+触发模式使能 ,1: 允许外部时钟+触发模式使能
+#define TIM_SLAVE_EXTERNAL_CLK                      (1) // 0: 禁止外部时钟使能 ,1: 允许外部时钟使能
 
 
 
@@ -69,7 +69,10 @@ typedef struct nTIM_IC_InitTypeDef
 
 static void GPIO_IC_CHx_Init(void);
 extern void TIM_Slave_Mode_Test(void);
-HAL_StatusTypeDef TIM_SlaveReset_Mode_Init(TIM_HandleTypeDef *pBaseStr, TIM_SlaveConfigTypeDef *pSlaveStr,nTIM_IC_InitTypeDef *pICStr);
+HAL_StatusTypeDef TIM_SlaveReset_Mode_Init( TIM_HandleTypeDef *pBaseStr, 
+                                            TIM_SlaveConfigTypeDef *pSlaveStr,
+                                            nTIM_IC_InitTypeDef *pICStr,
+                                            TIM_ClockConfigTypeDef *pClockStr);
 HAL_StatusTypeDef TIM_SlaveGated_Mode_Init(TIM_HandleTypeDef *pBaseStr, TIM_SlaveConfigTypeDef *pSlaveStr,nTIM_IC_InitTypeDef *pICStr);
 HAL_StatusTypeDef TIM_SlaveTrigger_Mode_Init(TIM_HandleTypeDef *pBaseStr, TIM_SlaveConfigTypeDef *pSlaveStr,nTIM_IC_InitTypeDef *pICStr);
 #endif /* __TIM_SLAVE_MODE_H_ */

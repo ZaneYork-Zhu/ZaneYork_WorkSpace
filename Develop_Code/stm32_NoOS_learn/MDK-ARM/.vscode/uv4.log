@@ -1,3 +1,15 @@
-Load "driver_generate\\driver_generate.axf" 
-Erase Done.Programming Done.Verify OK.Application running ...
-Flash Load finished at 17:48:53
+*** Using Compiler 'V6.22', folder: 'D:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'driver_generate'
+../Drivers/BSP/TIMER/TIM_Slave_Mode.c(38): warning: initializer overrides prior initialization of this subobject [-Winitializer-overrides]
+   38 |             .Period = 5-1,
+      |                       ^~~
+../Drivers/BSP/TIMER/TIM_Slave_Mode.c(34): note: previous initialization is here
+   34 |             .Period = 0x100000000-1, //自动重载寄存器值
+      |                       ^~~~~~~~~~~~~
+1 warning generated.
+compiling TIM_Slave_Mode.c...
+linking...
+Program Size: Code=8636 RO-data=496 RW-data=144 ZI-data=1936  
+FromELF: creating hex file...
+"driver_generate\driver_generate.axf" - 0 Error(s), 1 Warning(s).
+Build Time Elapsed:  00:00:01
