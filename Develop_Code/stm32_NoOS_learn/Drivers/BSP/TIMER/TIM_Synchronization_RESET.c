@@ -21,16 +21,16 @@ TIM_HandleTypeDef TIM_MasterStruct = {
     },
 };
 TIM_MasterConfigTypeDef TIM_MasterConfigStruct = {
-    .MasterOutputTrigger = TIM_TRGO_UPDATE, // 触发输出选择为更新事件
-    .MasterSlaveMode = TIM_MASTERSLAVEMODE_ENABLE, // 主从模式使能
+    .MasterOutputTrigger = TIM_TRGO_UPDATE,             // 触发输出选择为更新事件
+    .MasterSlaveMode = TIM_MASTERSLAVEMODE_ENABLE,      // 主从模式使能
 };
 
 TIM_HandleTypeDef TIM_SlaveStruct = {
     .Instance = TIMx_SLAVE_INSTANCE,
     .Init = {
-        .Prescaler = 1 - 1,                     // 预分频器
+        .Prescaler = 84000 - 1,                     // 预分频器
         .CounterMode = TIM_COUNTERMODE_UP,       // 向上计数模式
-        .Period = 5 - 1,                       // 自动重装载值
+        .Period = 10000 - 1,                       // 自动重装载值
         .ClockDivision = TIM_CLOCKDIVISION_DIV1, // 时钟分频
         .RepetitionCounter = 0,                   // 重复计数器
         .AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE, // 自动重装载预装载使能
@@ -38,7 +38,7 @@ TIM_HandleTypeDef TIM_SlaveStruct = {
 };
 
 TIM_SlaveConfigTypeDef TIM_SlaveConfigStruct = {
-    .SlaveMode = TIM_SLAVEMODE_EXTERNAL1,      // 从模式选择为外部1
+    .SlaveMode = TIM_SLAVEMODE_RESET,      // 从模式选择为外部1
     .InputTrigger = TIM_TS_ITR0,               // 输入触发源选择为内部触发0（对应TIM1）
     .TriggerPolarity = TIM_TRIGGERPOLARITY_RISING, // 触发极性选择为上升沿
     .TriggerPrescaler = TIM_TRIGGERPRESCALER_DIV1, // 触发预分频器选择为不分频
@@ -55,7 +55,8 @@ void TIM_Syn_Test(void)
     TIM_Syn_Init(&TIM_MasterStruct, &TIM_MasterConfigStruct, &TIM_SlaveStruct, &TIM_SlaveConfigStruct);
     while (1)
     {
-        /* code */
+        printf("master timer count: %d\r\n", __HAL_TIM_GET_COUNTER(&g_TIM_Base_SynMaster_Handle));
+        printf("slave timer count: %d\r\n", __HAL_TIM_GET_COUNTER(&g_TIM_Base_SynSlave_Handle));
     }
     
 }
@@ -121,10 +122,12 @@ HAL_StatusTypeDef TIM_Syn_Init( TIM_HandleTypeDef *pBaseMasterStr,
         printf("TIM_Syn_Init: HAL_TIM_SlaveConfigSynchro error\r\n");
         return HAL_ERROR;
     }
+    __HAL_TIM_URS_ENABLE(&g_TIM_Base_SynSlave_Handle); // 使能更新请求源选择位，只能通过软件设置，硬件无法清除该位
 
     /* Start the TIM Base generation in interrupt mode */
     HAL_TIM_Base_Start_IT(&g_TIM_Base_SynMaster_Handle);
     HAL_TIM_Base_Start_IT(&g_TIM_Base_SynSlave_Handle);
+    __HAL_TIM_ENABLE_IT(&g_TIM_Base_SynSlave_Handle, TIM_IT_TRIGGER); // 使能更新中断
 
     return HAL_OK;
 
@@ -161,10 +164,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if(htim->Instance == g_TIM_Base_SynMaster_Handle.Instance){
         // 主定时器中断回调
-        printf("主定时器中断回调\r\n");
+        printf("master timer interrupt callback\r\n");
+        printf("slave timer count: %d\r\n", __HAL_TIM_GET_COUNTER(&g_TIM_Base_SynSlave_Handle));
     }
     else if(htim->Instance == g_TIM_Base_SynSlave_Handle.Instance){
         // 从定时器中断回调
-        printf("从定时器中断回调\r\n");
+        printf("slave timer interrupt callback\r\n");
     }
 }
+
