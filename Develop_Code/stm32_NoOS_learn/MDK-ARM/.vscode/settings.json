@@ -22,7 +22,8 @@
     "tim_oc_opm_mode.h": "c",
     "tim_icandoc_combine_opm.h": "c",
     "tim_slave_mode.h": "c",
-    "tim_ic_pwmandslave.h": "c"
+    "tim_ic_pwmandslave.h": "c",
+    "tim_synchronization.h": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

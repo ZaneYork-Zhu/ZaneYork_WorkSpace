@@ -103,7 +103,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>11</nTsel>
+        <nTsel>6</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -171,7 +171,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Drivers\BSP\TIMER\TIM_IC_PWMandSlave.c</Filename>
+          <Filename>I:\ZaneYork_WorkSpace\Develop_Code\stm32_NoOS_learn\Drivers\BSP\TIMER\TIM_IC_PWMandSlave.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\driver_generate\../Drivers/BSP/TIMER/TIM_IC_PWMandSlave.c\131</Expression>
         </Bp>
@@ -187,7 +187,7 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Drivers\BSP\TIMER\TIM_IC_PWMandSlave.c</Filename>
+          <Filename>I:\ZaneYork_WorkSpace\Develop_Code\stm32_NoOS_learn\Drivers\BSP\TIMER\TIM_IC_PWMandSlave.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression>\\driver_generate\../Drivers/BSP/TIMER/TIM_IC_PWMandSlave.c\169</Expression>
         </Bp>
@@ -671,8 +671,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Drivers\BSP\TIMER\TIM_IC_PWMandSlave.c</PathWithFileName>
-      <FilenameWithoutPath>TIM_IC_PWMandSlave.c</FilenameWithoutPath>
+      <PathWithFileName>..\Drivers\BSP\TIMER\TIM_Synchronization.c</PathWithFileName>
+      <FilenameWithoutPath>TIM_Synchronization.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
