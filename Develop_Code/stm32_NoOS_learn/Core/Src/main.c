@@ -18,8 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "TIM_Synchronization_RESET.h"
-
+#include "_24Cxx_iic_driver.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -93,8 +92,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    TIM_Syn_Test();
-      
+    EEPROM_test();
     /* USER CODE BEGIN 3 */
 
   }

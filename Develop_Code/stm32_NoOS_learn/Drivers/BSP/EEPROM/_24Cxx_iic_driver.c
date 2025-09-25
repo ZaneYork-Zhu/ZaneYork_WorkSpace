@@ -37,20 +37,16 @@ static uint8_t eeprom_full_data[255] = {
 uint8_t datatemp[TEXT_SIZE] = {0};
 uint8_t key_EEPROM = 0;
 
-void EEPROM_text_init(void)
+void EEPROM_test(void)
 {
     EEPROM_init();
     uartInit(USART1,115200);
-    /* USER CODE BEGIN 2 */
     printf("EEPROM IIC Driver Test\r\n");
-    key_init();
+    Key_Init();
     EEPROM_check();
-}
-void EEPROM_text_while(void)
-{
     while (1)
     {
-        key_EEPROM = key_scan(0);
+        key_EEPROM = Key_Scan(0);
         if (key_EEPROM == KEY1_PRES)
         {
             if(1 == EEPROM_WriteBuffer(0x00,eeprom_full_data,TEXT_SIZE))
@@ -75,6 +71,7 @@ void EEPROM_text_while(void)
         }
     }
 }
+
 /*****************************************操作EEPROM的一些基本函数****************/
 /**
  * @brief       初始化IIC接口
@@ -206,7 +203,7 @@ uint8_t EEPROM_ReadSingleByte(const uint16_t readaddr)
     uint8_t device_addr_bit = config.addr_bits; 
     volatile int8_t device_MemAddSize;
     /*获取读取是否成功*/
-    volatile HAL_StatusTypeDef Operation_state = HAL_OK;
+    HAL_StatusTypeDef Operation_state = HAL_OK;
      /*负责返回读取数据*/
     uint8_t _24cxx_receive_byte = {0};
 #if IIC_SOFTWARE_ENABLE
@@ -333,7 +330,7 @@ OperationResult EEPROM_WriteSingleByte(const uint16_t write_addr, const uint8_t 
     /*获取待写入的数据*/
     volatile uint8_t Mem_write_data =  write_data;
     /*获取写入是否成功*/
-    volatile OperationResult Operation_state = OP_SUCCESS;
+    HAL_StatusTypeDef Operation_state = HAL_OK;
 #if IIC_SOFTWARE_ENABLE
     /*监控ACK应答情况*/
     IIC_State IIC_write_state = IIC_ACK;
@@ -398,7 +395,7 @@ OperationResult EEPROM_WriteSingleByte(const uint16_t write_addr, const uint8_t 
         #if IIC_IT_ENABLE
 
             /*改用IT方式*/
-            Operation_state =  HAL_I2C_Mem_Write_IT(&hi2c1,generate_device_address(_24cxx_writeaddr,0),_24cxx_writeaddr,(uint8_t)device_MemAddSize,(uint8_t *)(&Mem_write_data),1);
+            Operation_state = HAL_I2C_Mem_Write_IT(&hi2c1,generate_device_address(_24cxx_writeaddr,0),_24cxx_writeaddr,(uint8_t)device_MemAddSize,(uint8_t *)(&Mem_write_data),1);
             //延迟等待EEPROM写入周期结束
             HAL_Delay(5);
             // 等待 IT传输完成 
@@ -417,7 +414,7 @@ OperationResult EEPROM_WriteSingleByte(const uint16_t write_addr, const uint8_t 
             // 准备下一次传输
             gDMA_transfer_read_complete = 0;
         #endif
-        if( Operation_state != OP_SUCCESS)
+        if( Operation_state == HAL_OK)
         {
             return OP_SUCCESS;
         }

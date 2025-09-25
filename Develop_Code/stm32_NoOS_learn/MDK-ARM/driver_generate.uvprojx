@@ -341,7 +341,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F407xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Drivers/BSP/debug_com;../Drivers/BSP/LED;..\Drivers\BSP\TIMER\GTP_timer_TIM9+12\GTP_timer_OC;..\Drivers\BSP\TIMER</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;../Drivers/BSP/debug_com;../Drivers/BSP/LED;..\Drivers\BSP\EEPROM;..\Drivers\BSP\IIC\hardware;..\Drivers\BSP\KEY;..\Drivers\BSP\KEY</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -653,9 +653,19 @@
               <FilePath>..\Drivers\BSP\LED\led.c</FilePath>
             </File>
             <File>
-              <FileName>TIM_Synchronization_RESET.c</FileName>
+              <FileName>_24Cxx_iic_driver.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Drivers\BSP\TIMER\TIM_Synchronization_RESET.c</FilePath>
+              <FilePath>..\Drivers\BSP\EEPROM\_24Cxx_iic_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>_hardware_IIC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\BSP\IIC\hardware\_hardware_IIC.c</FilePath>
+            </File>
+            <File>
+              <FileName>key.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\BSP\KEY\key.c</FilePath>
             </File>
           </Files>
         </Group>

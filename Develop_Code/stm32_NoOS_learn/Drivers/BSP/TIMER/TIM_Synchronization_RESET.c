@@ -38,11 +38,11 @@ TIM_HandleTypeDef TIM_SlaveStruct = {
 };
 
 TIM_SlaveConfigTypeDef TIM_SlaveConfigStruct = {
-    .SlaveMode = TIM_SLAVEMODE_RESET,      // 从模式选择为外部1
-    .InputTrigger = TIM_TS_ITR0,               // 输入触发源选择为内部触发0（对应TIM1）
-    .TriggerPolarity = TIM_TRIGGERPOLARITY_RISING, // 触发极性选择为上升沿
-    .TriggerPrescaler = TIM_TRIGGERPRESCALER_DIV1, // 触发预分频器选择为不分频
-    .TriggerFilter = 0,                        // 触发滤波器设置为0（无滤波）
+    .SlaveMode = TIM_SLAVEMODE_RESET,                   // 从模式选择为外部1
+    .InputTrigger = TIM_TS_ITR0,                        // 输入触发源选择为内部触发0（对应TIM1）
+    .TriggerPolarity = TIM_TRIGGERPOLARITY_RISING,      // 触发极性选择为上升沿
+    .TriggerPrescaler = TIM_TRIGGERPRESCALER_DIV1,      // 触发预分频器选择为不分频
+    .TriggerFilter = 0,                                  // 触发滤波器设置为0（无滤波）
 };
 
 

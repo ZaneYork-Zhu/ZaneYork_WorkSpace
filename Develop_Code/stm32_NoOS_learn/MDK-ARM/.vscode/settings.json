@@ -24,7 +24,9 @@
     "tim_slave_mode.h": "c",
     "tim_ic_pwmandslave.h": "c",
     "tim_synchronization.h": "c",
-    "tim_synchronization_reset.h": "c"
+    "tim_synchronization_reset.h": "c",
+    "_hardware_iic.h": "c",
+    "key.h": "c"
   },
   "C_Cpp_Runner.cCompilerPath": "gcc",
   "C_Cpp_Runner.cppCompilerPath": "g++",

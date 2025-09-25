@@ -10,8 +10,8 @@ extern "C" {
 #define hi2c1               gI2C_HandleTypeStruct
 #define EEPROM_TEXT_DATA    0x55 
 
-#define IIC_SOFTWARE_ENABLE                     (1)
-#define IIC_HARDWARE_ENABLE                     (0)
+#define IIC_SOFTWARE_ENABLE                     (0)
+#define IIC_HARDWARE_ENABLE                     (1)
 
 typedef enum {
     OP_SUCCESS = 1,  // 操作成功 
@@ -74,8 +74,7 @@ typedef enum {
     AT24C02_READ  = 0xA1   // 读操作地址（7位地址左移1位 + 读方向位1）
 } I2C_DEVICEADDRES;
 
-void EEPROM_text_init(void);
-void EEPROM_text_while(void);
+void EEPROM_test(void);
 
 /*初始化EEPROM的GPIO*/
 void EEPROM_init(void);
