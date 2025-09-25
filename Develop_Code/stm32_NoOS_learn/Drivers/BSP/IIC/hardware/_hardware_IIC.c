@@ -137,9 +137,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
             /* I2C1 interrupt Init */
             HAL_NVIC_SetPriority(IIC_EV_IRQ, IIC_EV_PreemptPriority, IIC_EV_SubPriority);
             HAL_NVIC_EnableIRQ(IIC_EV_IRQ);
-
-            HAL_NVIC_SetPriority(IIC_ER_IRQ, IIC_ER_PreemptPriority, IIC_ER_SubPriority);
-            HAL_NVIC_EnableIRQ(IIC_ER_IRQ);
         }
 
 
@@ -148,9 +145,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
         /* I2C1 interrupt Init */
         HAL_NVIC_SetPriority(IIC_EV_IRQ, IIC_EV_PreemptPriority, IIC_EV_SubPriority);
         HAL_NVIC_EnableIRQ(IIC_EV_IRQ);
-
-        HAL_NVIC_SetPriority(IIC_ER_IRQ, IIC_ER_PreemptPriority, IIC_ER_SubPriority);
-        HAL_NVIC_EnableIRQ(IIC_ER_IRQ);
     #endif
     }
 }
@@ -180,15 +174,6 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
     {
         HAL_I2C_EV_IRQHandler(&gI2C_HandleTypeStruct);
     }
-
-    /**
-     * @brief This function handles I2C1 error interrupt.
-     */
-    void IIC_ER_IRQHandler(void)
-    {
-        HAL_I2C_ER_IRQHandler(&gI2C_HandleTypeStruct);
-    }
-
     // DMA 接收完成回调函数 
     void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) 
     { 
@@ -216,15 +201,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
     {
         HAL_I2C_EV_IRQHandler(&gI2C_HandleTypeStruct);
     }
-
-    /**
-     * @brief This function handles I2C1 error interrupt.
-     */
-    void IIC_ER_IRQHandler(void)
-    {
-        HAL_I2C_ER_IRQHandler(&gI2C_HandleTypeStruct);
-    }
-		    // DMA 接收完成回调函数 
+	// DMA 接收完成回调函数 
     void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) 
     { 
         if (hi2c == &gI2C_HandleTypeStruct) 
