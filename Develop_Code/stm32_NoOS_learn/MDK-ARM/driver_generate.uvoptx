@@ -103,7 +103,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>6</nTsel>
+        <nTsel>11</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -671,8 +671,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\Drivers\BSP\TIMER\TIM_Synchronization.c</PathWithFileName>
-      <FilenameWithoutPath>TIM_Synchronization.c</FilenameWithoutPath>
+      <PathWithFileName>..\Drivers\BSP\TIMER\TIM_Synchronization_RESET.c</PathWithFileName>
+      <FilenameWithoutPath>TIM_Synchronization_RESET.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

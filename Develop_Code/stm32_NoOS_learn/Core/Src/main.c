@@ -18,7 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "TIM_Synchronization.h"
+#include "TIM_Synchronization_RESET.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -93,7 +93,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    TIM_Syn_Test();
       
     /* USER CODE BEGIN 3 */
 
