@@ -1,0 +1,14 @@
+--cpu Cortex-M0
+".\objects\startup_n32wb03x.o"
+".\objects\system_n32wb03x.o"
+".\objects\misc.o"
+".\objects\n32wb03x_gpio.o"
+".\objects\n32wb03x_lpuart.o"
+".\objects\n32wb03x_rcc.o"
+".\objects\n32wb03x_usart.o"
+".\objects\main.o"
+".\objects\n32wb03x_it.o"
+--library_type=microlib --strict --scatter ".\Objects\Printf.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\Printf.map" -o .\Objects\Printf.axf

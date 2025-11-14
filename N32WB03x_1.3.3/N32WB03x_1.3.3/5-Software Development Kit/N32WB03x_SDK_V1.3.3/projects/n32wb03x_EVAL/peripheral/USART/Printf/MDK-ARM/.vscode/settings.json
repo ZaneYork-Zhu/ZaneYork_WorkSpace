@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "oled_hardware_spi.h": "c",
+        "*.rmd": "markdown",
+        "driver_usart.h": "c",
+        "n32wb03x.h": "c",
+        "main.h": "c",
+        "random": "c"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "oled_hardware_spi.h": "c",
+        "*.rmd": "markdown",
+        "n32wb03x_rtc.h": "c"
+    }
+}

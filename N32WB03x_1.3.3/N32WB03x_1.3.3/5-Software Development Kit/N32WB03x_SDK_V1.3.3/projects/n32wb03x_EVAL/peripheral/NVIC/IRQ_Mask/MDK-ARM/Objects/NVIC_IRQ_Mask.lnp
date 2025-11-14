@@ -1,0 +1,16 @@
+--cpu Cortex-M0
+".\objects\startup_n32wb03x.o"
+".\objects\system_n32wb03x.o"
+".\objects\misc.o"
+".\objects\n32wb03x_exti.o"
+".\objects\n32wb03x_gpio.o"
+".\objects\n32wb03x_rcc.o"
+".\objects\n32wb03x_tim.o"
+".\objects\n32wb03x_usart.o"
+".\objects\log.o"
+".\objects\main.o"
+".\objects\n32wb03x_it.o"
+--library_type=microlib --strict --scatter ".\Objects\NVIC_IRQ_Mask.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\NVIC_IRQ_Mask.map" -o .\Objects\NVIC_IRQ_Mask.axf
